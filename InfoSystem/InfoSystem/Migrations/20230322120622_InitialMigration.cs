@@ -15,18 +15,16 @@ namespace InfoSystem.Migrations
                 name: "AcademicPlans",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AcademicPlanId = table.Column<Guid>(type: "uuid", nullable: false),
                     EducationalProgram = table.Column<string>(type: "text", nullable: false),
                     Plan = table.Column<string>(type: "text", nullable: false),
-                    FacultyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: false),
                     RecruitmentYear = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EducationForm = table.Column<string>(type: "text", nullable: false),
                     TrainingPeriod = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AcademicPlans", x => x.Id);
+                    table.PrimaryKey("PK_AcademicPlans", x => x.AcademicPlanId);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,8 +36,7 @@ namespace InfoSystem.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     DepartmentHead = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    FacultyId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Email = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,7 +54,8 @@ namespace InfoSystem.Migrations
                     Address = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    PlanId = table.Column<Guid>(type: "uuid", nullable: false)
+                    AcademicPlanId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,13 +66,13 @@ namespace InfoSystem.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     RecruitmentYear = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.PrimaryKey("PK_Groups", x => x.GroupId);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,7 +96,7 @@ namespace InfoSystem.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TeacherId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
                     Patronymic = table.Column<string>(type: "text", nullable: false),
@@ -109,7 +107,20 @@ namespace InfoSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.PrimaryKey("PK_Teachers", x => x.TeacherId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Login = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
         }
 
@@ -133,6 +144,9 @@ namespace InfoSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teachers");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

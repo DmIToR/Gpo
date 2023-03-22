@@ -7,37 +7,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c56ef2d9-4267-4c8c-bfa3-fc030ac9782f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Context/DataContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Controllers/WeatherForecastController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/InfoSystem.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/AcademicPlan.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/Department.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/Faculty.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/Group.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/Student.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/Teacher.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/Properties/launchSettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/WeatherForecast.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/appsettings.Development.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/appsettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.AssemblyInfoInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.GlobalUsings.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.assets.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/InfoSystem.csproj.nuget.dgspec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/InfoSystem.csproj.nuget.g.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/InfoSystem.csproj.nuget.g.targets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/project.assets.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/project.nuget.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/InfoSystem/obj/rider.project.restore.info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InfoSystem/Controllers/UserController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/InfoSystem/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Context/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Context/DataContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Migrations/20230321153321_InitialMigration.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Migrations/20230322120415_InitialMigration.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Migrations/20230321153321_InitialMigration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Migrations/20230322120415_InitialMigration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Migrations/DataContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Migrations/DataContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/AcademicPlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/AcademicPlan.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/Department.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/Department.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/Faculty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/Faculty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/Group.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/Group.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/Student.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/Student.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/Teacher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/Teacher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/refint/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/refint/InfoSystem.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +62,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.InfoSystem: IIS Express">
+  <component name="RunManager" selected=".NET Launch Settings Profile.InfoSystem: http">
     <configuration name="InfoSystem: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/InfoSystem/InfoSystem.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net7.0" />
@@ -129,8 +118,17 @@
       <option name="presentableId" value="Default" />
       <updated>1679409716189</updated>
       <workItem from="1679409717501" duration="1839000" />
-      <workItem from="1679411602697" duration="873000" />
+      <workItem from="1679411602697" duration="1391000" />
+      <workItem from="1679485528606" duration="1124000" />
     </task>
+    <task id="LOCAL-00001" summary="initial">
+      <created>1679412849950</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679412849950</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,6 +138,8 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="initial" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
