@@ -24,11 +24,8 @@ namespace InfoSystem.Migrations
 
             modelBuilder.Entity("InfoSystem.Models.AcademicPlan", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("AcademicPlanId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("DepartmentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("EducationForm")
@@ -38,9 +35,6 @@ namespace InfoSystem.Migrations
                     b.Property<string>("EducationalProgram")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid>("FacultyId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("Plan")
                         .IsRequired()
@@ -53,7 +47,7 @@ namespace InfoSystem.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("AcademicPlanId");
 
                     b.ToTable("AcademicPlans");
                 });
@@ -75,9 +69,6 @@ namespace InfoSystem.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid>("FacultyId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -102,9 +93,15 @@ namespace InfoSystem.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("AcademicPlanId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Dukan")
                         .IsRequired()
@@ -122,9 +119,6 @@ namespace InfoSystem.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("PlanId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.ToTable("Faculties");
@@ -132,7 +126,7 @@ namespace InfoSystem.Migrations
 
             modelBuilder.Entity("InfoSystem.Models.Group", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -143,7 +137,7 @@ namespace InfoSystem.Migrations
                     b.Property<DateTime>("RecruitmentYear")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupId");
 
                     b.ToTable("Groups");
                 });
@@ -183,7 +177,7 @@ namespace InfoSystem.Migrations
 
             modelBuilder.Entity("InfoSystem.Models.Teacher", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("TeacherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -215,9 +209,28 @@ namespace InfoSystem.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("TeacherId");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("InfoSystem.Models.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
