@@ -1,0 +1,19 @@
+export const CloseIcon = () => {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.16669 1.16667L7.00002 7M7.00002 7L12.8334 12.8333M7.00002 7L12.8334 1.16667M7.00002 7L1.16669 12.8333"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};

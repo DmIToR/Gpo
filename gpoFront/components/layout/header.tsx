@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Profile } from "../icons/profile";
 
 export const links: Array<{ name: string; link: string }> = [
@@ -10,13 +10,14 @@ export const links: Array<{ name: string; link: string }> = [
 ];
 
 export default function Header() {
+  const [isAuth, setIsAuth] = useState(true);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
-  const [showLangs, setShowLangs] = useState(false)
+  const [showLangs, setShowLangs] = useState(false);
   const router = useRouter();
 
   const toggleLangBar = () => {
     if (!isOpenDropDown) {
-        setIsOpenDropDown(true);
+      setIsOpenDropDown(true);
       setTimeout(() => setShowLangs(true), 500);
     } else if (isOpenDropDown) {
       setShowLangs(false);
@@ -24,14 +25,26 @@ export default function Header() {
     }
   };
 
+  const unAuth = () => {
+    localStorage.setItem('auth', JSON.stringify('nologin'))
+  }
+
+  useEffect(() => { //@ts-ignore
+    var tempObject = JSON.parse(localStorage.getItem("auth"));
+    if (localStorage.getItem("auth") === null || tempObject === 'nologin') {
+      setIsAuth(true);
+    } else setIsAuth(false);
+  }, [isAuth, router]);
+
   return (
     <div className="fixed top-0 bg-white w-full px-16 flex justify-between">
       <div className="flex items-center">
-        {links.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => router.push(`${item.link}`)}
-            className={`
+        {!isAuth ? (
+          links.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => router.push(`${item.link}`)}
+              className={`
             ${item.link && "cursor-pointer hover:text-blue-active"} 
             ${
               router.asPath === item.link
@@ -39,44 +52,63 @@ export default function Header() {
                 : "text-black"
             }
             py-6 mx-6 transition-all duration-500`}
-          >
-            {item.name}
-          </div>
-        ))}
-      </div>
-      <div className={`flex items-center relative mr-6`}>
-        <div
-          onClick={toggleLangBar}
-          className="flex group"
-        >
-          <p className="group-hover:text-blue-active cursor-pointer">
-            Путин В.В
-          </p>
+            >
+              {item.name}
+            </div>
+          ))
+        ) : (
           <div
-            className={`text-black group-hover:text-blue-active active:text-blue-active 
-                cursor-pointer h-6 w-6 ml-2`}
+            onClick={() => router.push(`/auth`)}
+            className={`
+            ${"/auth" && "cursor-pointer hover:text-blue-active"} 
+            ${
+              router.asPath === "/auth"
+                ? "border-b-2 border-blue-active text-blue-active"
+                : "text-black"
+            }
+            py-6 mx-6 transition-all duration-500`}
           >
-            <Profile />
+            Аутентификация
           </div>
-        </div>
+        )}
+      </div>
+      {!isAuth && (
+        <div className={`flex items-center relative mr-6`}>
+          <div onClick={toggleLangBar} className="flex group">
+            <p className="group-hover:text-blue-active cursor-pointer">
+              Александров А.А
+            </p>
+            <div
+              className={`text-black group-hover:text-blue-active active:text-blue-active 
+                cursor-pointer h-6 w-6 ml-2`}
+            >
+              <Profile />
+            </div>
+          </div>
 
-        <div
-          className={`${
-            isOpenDropDown ? "h-10" : "h-0"
-          } transition-all duration-500
-            absolute w-full bg-white top-[74px] z-10 rounded-b-lg`}
-        >
           <div
             className={`${
-              showLangs
-                ? "showContentNavBar opacity-100"
-                : "hideContentNavBar opacity-0"
-            } transition-all duration-500`}
+              isOpenDropDown ? "h-10" : "h-0"
+            } transition-all duration-500
+            absolute w-full bg-white top-[74px] z-10 rounded-b-lg`}
           >
-            <p className={`text-center p-2 cursor-pointer hover:text-blue-active`}>Выйти</p>
+            <div
+              className={`${
+                showLangs
+                  ? "showContentNavBar opacity-100"
+                  : "hideContentNavBar opacity-0"
+              } transition-all duration-500`}
+              onClick={() => unAuth()}
+            >
+              <p
+                className={`text-center p-2 cursor-pointer hover:text-blue-active`}
+              >
+                Выйти
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

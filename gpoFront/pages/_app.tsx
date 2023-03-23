@@ -7,10 +7,13 @@ import { useEffect } from 'react';
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  useEffect(() => {
-    if (router.asPath === '/')
-      router.push(`/profile`);
-  });
+  useEffect(() => { //@ts-ignore
+    var tempObject = JSON.parse(localStorage.getItem("auth"));
+    if(localStorage.getItem("auth") === null || tempObject === 'nologin') {
+      router.push(`/auth`);
+    } else router.push(`/profile`)
+  },[router]);
+
 
   return (
     <Layout>

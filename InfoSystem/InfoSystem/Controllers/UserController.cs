@@ -33,7 +33,7 @@ public class UserController : Controller
 
         if (GetUser(username, password) is not null)
         {
-            return new Result(false, "Такое пользователь существует");
+            return new Result(false, "Такой пользователь уже существует");
         }
 
         _context.Add(user);
@@ -49,7 +49,7 @@ public class UserController : Controller
         var user = GetUser(username, password);
 
         return user is not null ? new Result(true, $"Пользователь {user.Login} авторизовался") 
-            : new Result(false, "Неправильно введыны данные");
+            : new Result(false, "Неправильно введены данные");
     }
 
     private User? GetUser(string username, string password)

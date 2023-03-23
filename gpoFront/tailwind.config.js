@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         'gray-main': '#f5f5f5',
         'blue-active': '#388bff',
+        'overlay-gray': 'rgba(13, 12, 12, 0.8)',
       },
     },
   },
