@@ -9,14 +9,13 @@
     <list default="true" id="c56ef2d9-4267-4c8c-bfa3-fc030ac9782f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/InfoSystem.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/InfoSystem.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/refint/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/refint/InfoSystem.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

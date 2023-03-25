@@ -9,7 +9,7 @@ namespace InfoSystem.Controllers;
 public class UserController : Controller
 {
     private readonly DataContext _context;
-    
+
     public UserController(DataContext context)
     {
         _context = context;
@@ -26,27 +26,28 @@ public class UserController : Controller
     {
         user.CreateGuid();
 
-        if (GetUser(user.Login, user.Password) is not null)
+        if (GetUser(user.Login) is not null)
         {
-            return new Result(false, "Такое пользователь существует");
+            return GetResult(404, false, "Такой пользователь существует");
         }
 
         _context.Users.Add(user);
         _context.SaveChanges();
-
-        return new Result(true, "Пользователь добавлен");
+        
+        return GetResult(200, true, "Пользователь добавлен");
     }
 
     [HttpGet]
     [Route("AuthorizeUser")]
     public Result AuthorizeUser(string username, string password)
     {
-        var user = GetUser(username, password);
+        var user = GetUser(username);
 
-        return user is not null ? new Result(true, $"Пользователь {user.Login} авторизовался") 
-            : new Result(false, "Неправильно введыны данные");
+        return user is not null 
+            ? GetResult(200, true, $"Пользователь {user.Login} авторизовался")
+            : GetResult(404, false, "Неправильно введены данные");
     }
-    
+
     [HttpPost]
     [Route("RemoveUsers")]
     public void RemoveUsers()
@@ -55,9 +56,41 @@ public class UserController : Controller
         _context.SaveChanges();
     }
 
-    private User? GetUser(string username, string password) 
+    [HttpPost]
+    [Route("PasswordRecovery")]
+    public Result PasswordRecovery(string username)
+    {
+        if (GetUser(username) is not null)
+        {
+            var password = GeneratePassword();
+
+            for (int i = 0; i < _context.Users.ToList().Count; i++)
+            {
+                if (_context.Users.ToList()[i].Login == username)
+                {
+                    _context.Users.ToList()[i].Password = password;
+                }
+            }
+
+            _context.SaveChanges();
+            return GetResult(200, true, $"Новый пароль: {password}");
+        }
+        
+        return GetResult(404, false,"Пользователь не найден");
+    }
+
+    private Result GetResult(int statusCode, bool status, string resultMessage)
+    {
+        HttpContext.Response.StatusCode = statusCode;
+        return new Result(status, resultMessage);
+    }
+
+    private string GeneratePassword()
+        => "abc";
+
+    private User? GetUser(string username)
         => _context.Users
-            .FirstOrDefault(user => user.Login == username && user.Password == password);
+            .FirstOrDefault(user => user.Login == username);
 }
 
 public struct Result
