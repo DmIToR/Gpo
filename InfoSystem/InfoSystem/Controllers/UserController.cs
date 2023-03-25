@@ -52,7 +52,9 @@ public class UserController : Controller
     [Route("RemoveUsers")]
     public void RemoveUsers()
     {
-        _context.Users.ToList().Clear();
+        var users = _context.Users.ToList();
+        
+        _context.Users.RemoveRange(users);
         _context.SaveChanges();
     }
 
