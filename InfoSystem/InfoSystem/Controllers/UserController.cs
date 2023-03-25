@@ -22,21 +22,16 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("AddUser")]
-    public Result AddUser(string username, string password)
+    public Result AddUser(User user)
     {
-        var user = new User
-        {
-            UserId = Guid.NewGuid(),
-            Login = username,
-            Password = password
-        };
+        user.CreateGuid();
 
-        if (GetUser(username, password) is not null)
+        if (GetUser(user.Login, user.Password) is not null)
         {
             return new Result(false, "Такое пользователь существует");
         }
 
-        _context.Add(user);
+        _context.Users.Add(user);
         _context.SaveChanges();
 
         return new Result(true, "Пользователь добавлен");
@@ -51,12 +46,18 @@ public class UserController : Controller
         return user is not null ? new Result(true, $"Пользователь {user.Login} авторизовался") 
             : new Result(false, "Неправильно введыны данные");
     }
-
-    private User? GetUser(string username, string password)
+    
+    [HttpPost]
+    [Route("RemoveUsers")]
+    public void RemoveUsers()
     {
-        return _context.Users
-            .FirstOrDefault(user => user.Login == username && user.Password == password);
+        _context.Users.ToList().Clear();
+        _context.SaveChanges();
     }
+
+    private User? GetUser(string username, string password) 
+        => _context.Users
+            .FirstOrDefault(user => user.Login == username && user.Password == password);
 }
 
 public struct Result
