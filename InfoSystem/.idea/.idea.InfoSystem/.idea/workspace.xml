@@ -7,20 +7,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c56ef2d9-4267-4c8c-bfa3-fc030ac9782f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InfoSystem/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/InfoSystem.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/InfoSystem.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/bin/Debug/net7.0/InfoSystem.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/refint/InfoSystem.dll" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/refint/InfoSystem.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfoSystem/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/InfoSystem/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="e2533afa324b1f84d9538c1b10df5dc6f51e8e5b" />
+      </map>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0c79809ee6a040049c56f9b8cb65d96bc28a8/1f/9b734694/Controller.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3b85765610c77afea116eb235b0824d2d49e530f47c4cfb6f7b665737a52a2/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/shit/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/InfoSystem/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
@@ -30,6 +45,9 @@
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectId" id="2NKPI3R6nbmGutnUxESJi6Dxpps" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -110,6 +128,7 @@
       <workItem from="1679411602697" duration="1391000" />
       <workItem from="1679485528606" duration="1124000" />
       <workItem from="1679488313789" duration="5429000" />
+      <workItem from="1679837706519" duration="2288000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <created>1679412849950</created>

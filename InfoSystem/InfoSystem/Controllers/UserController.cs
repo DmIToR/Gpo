@@ -1,5 +1,6 @@
 ﻿using InfoSystem.Context;
 using InfoSystem.Models;
+using InfoSystem.Models.FrontModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Controllers;
@@ -22,15 +23,17 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("AddUser")]
-    public Result AddUser(User user)
+    public Result AddUser(User user, string secretCode)
     {
-        user.CreateGuid();
-
         if (GetUser(user.Login) is not null)
         {
             return GetResult(404, false, "Такой пользователь существует");
         }
+        
+        user.CreateGuid();
 
+        var userModel = new UserModel(user.Login, user.Password, secretCode); // add in bd
+        user.SecretCode = secretCode;
         _context.Users.Add(user);
         _context.SaveChanges();
         
@@ -79,6 +82,37 @@ public class UserController : Controller
         }
         
         return GetResult(404, false,"Пользователь не найден");
+    }
+    
+    [HttpPost]
+    [Route("EnterSecretCode")]
+    public Result EnterSecretCode(string username, string code)
+    {
+        var user = GetUser(username);
+        
+        if (user is not null && user.SecretCode == code)
+        {
+            return GetResult(200, true, $"Секретный код введен правилньо");
+        }
+        
+        return GetResult(404, false, $"Секретный код введен не верно");
+    }
+    
+    [HttpPost]
+    [Route("SetPassword")]
+    public Result SetPassword(string username, string password)
+    {
+        for (int i = 0; i < _context.Users.ToList().Count; i++)
+        {
+            if (_context.Users.ToList()[i].Login == username)
+            {
+                _context.Users.ToList()[i].Password = password;
+                _context.SaveChanges();
+                return GetResult(200, true, $"Пароль изменен. Новый пароль: {password}");
+            }
+        }
+
+        return GetResult(404, false, $"Такого юзера нету");
     }
 
     private Result GetResult(int statusCode, bool status, string resultMessage)

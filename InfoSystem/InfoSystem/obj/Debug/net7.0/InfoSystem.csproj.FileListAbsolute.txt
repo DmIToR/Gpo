@@ -108,3 +108,4 @@ C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\refint\InfoSystem.dll
 C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\InfoSystem.pdb
 C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\InfoSystem.genruntimeconfig.cache
 C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\ref\InfoSystem.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\InfoSystem.staticwebassets.runtime.json
