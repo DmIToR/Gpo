@@ -1,6 +1,5 @@
 ﻿using InfoSystem.Context;
 using InfoSystem.Models;
-using InfoSystem.Models.FrontModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Controllers;
@@ -23,7 +22,7 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("AddUser")]
-    public Result AddUser(User user, string secretCode)
+    public Result AddUser(User user)
     {
         if (GetUser(user.Login) is not null)
         {
@@ -32,8 +31,6 @@ public class UserController : Controller
         
         user.CreateGuid();
 
-        var userModel = new UserModel(user.Login, user.Password, secretCode); // add in bd
-        user.SecretCode = secretCode;
         _context.Users.Add(user);
         _context.SaveChanges();
         
@@ -86,11 +83,11 @@ public class UserController : Controller
     
     [HttpPost]
     [Route("EnterSecretCode")]
-    public Result EnterSecretCode(string username, string code)
+    public Result EnterSecretCode(string username, string secretPhrase)
     {
         var user = GetUser(username);
         
-        if (user is not null && user.SecretCode == code)
+        if (user is not null && user.SecretPhrase == secretPhrase)
         {
             return GetResult(200, true, $"Секретный код введен правилньо");
         }
