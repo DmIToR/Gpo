@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {}
+    "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {
+    "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
+        "projectUniqueName": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
         "projectName": "InfoSystem",
-        "projectPath": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
-        "packagesPath": "C:\\Users\\errli\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\obj\\",
+        "projectPath": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
+        "packagesPath": "C:\\Users\\roman\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\errli\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\roman\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -51,6 +51,18 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.0-preview.2.23128.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0-preview.2.23128.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer.Design": {
+              "target": "Package",
+              "version": "[2.0.0-preview1-final, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools.DotNet": {
+              "target": "Package",
+              "version": "[2.0.3, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",

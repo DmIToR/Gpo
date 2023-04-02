@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InfoSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class _ : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,8 +80,6 @@ namespace InfoSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Surname = table.Column<string>(type: "text", nullable: false),
                     Patronymic = table.Column<string>(type: "text", nullable: true),
                     Birthday = table.Column<string>(type: "text", nullable: false),
                     RecordBook = table.Column<string>(type: "text", nullable: false),
@@ -97,8 +95,6 @@ namespace InfoSystem.Migrations
                 columns: table => new
                 {
                     TeacherId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Surname = table.Column<string>(type: "text", nullable: false),
                     Patronymic = table.Column<string>(type: "text", nullable: false),
                     Post = table.Column<string>(type: "text", nullable: false),
                     EducationLevel = table.Column<string>(type: "text", nullable: false),
@@ -116,7 +112,10 @@ namespace InfoSystem.Migrations
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Login = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false)
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Surname = table.Column<string>(type: "text", nullable: false),
+                    SecretPhrase = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

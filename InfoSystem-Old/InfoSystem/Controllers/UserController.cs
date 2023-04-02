@@ -9,7 +9,7 @@ namespace InfoSystem.Controllers;
 public class UserController : Controller
 {
     private readonly DataContext _context;
-    
+
     public UserController(DataContext context)
     {
         _context = context;
@@ -22,41 +22,108 @@ public class UserController : Controller
 
     [HttpPost]
     [Route("AddUser")]
-    public Result AddUser(string username, string password)
+    public Result AddUser(User user)
     {
-        var user = new User
+        if (GetUser(user.Login) is not null)
         {
-            UserId = Guid.NewGuid(),
-            Login = username,
-            Password = password
-        };
-
-        if (GetUser(username, password) is not null)
-        {
-            return new Result(false, "Такой пользователь уже существует");
+            return GetResult(404, false, "Такой пользователь существует");
         }
+        
+        user.CreateGuid();
 
-        _context.Add(user);
+        _context.Users.Add(user);
         _context.SaveChanges();
-
-        return new Result(true, "Пользователь добавлен");
+        
+        return GetResult(200, true, "Пользователь добавлен");
     }
 
     [HttpGet]
     [Route("AuthorizeUser")]
     public Result AuthorizeUser(string username, string password)
     {
-        var user = GetUser(username, password);
+        var user = GetUser(username);
 
-        return user is not null ? new Result(true, $"Пользователь {user.Login} авторизовался") 
-            : new Result(false, "Неправильно введены данные");
+        return user is not null 
+            ? GetResult(200, true, $"Пользователь {user.Login} авторизовался")
+            : GetResult(404, false, "Неправильно введены данные");
     }
 
-    private User? GetUser(string username, string password)
+    [HttpPost]
+    [Route("RemoveUsers")]
+    public void RemoveUsers()
     {
-        return _context.Users
-            .FirstOrDefault(user => user.Login == username && user.Password == password);
+        var users = _context.Users.ToList();
+        
+        _context.Users.RemoveRange(users);
+        _context.SaveChanges();
     }
+
+    [HttpPost]
+    [Route("PasswordRecovery")]
+    public Result PasswordRecovery(string username)
+    {
+        if (GetUser(username) is not null)
+        {
+            var password = GeneratePassword();
+
+            for (int i = 0; i < _context.Users.ToList().Count; i++)
+            {
+                if (_context.Users.ToList()[i].Login == username)
+                {
+                    _context.Users.ToList()[i].Password = password;
+                }
+            }
+
+            _context.SaveChanges();
+            return GetResult(200, true, $"Новый пароль: {password}");
+        }
+        
+        return GetResult(404, false,"Пользователь не найден");
+    }
+    
+    [HttpPost]
+    [Route("EnterSecretCode")]
+    public Result EnterSecretCode(string username, string secretPhrase)
+    {
+        var user = GetUser(username);
+        
+        if (user is not null && user.SecretPhrase == secretPhrase)
+        {
+            return GetResult(200, true, $"Секретный код введен правилньо");
+        }
+        
+        return GetResult(404, false, $"Секретный код введен не верно");
+    }
+    
+    [HttpPost]
+    [Route("SetPassword")]
+    public Result SetPassword(string username, string password)
+    {
+        for (int i = 0; i < _context.Users.ToList().Count; i++)
+        {
+            if (_context.Users.ToList()[i].Login == username)
+            {
+                _context.Users.ToList()[i].Password = password;
+                _context.SaveChanges();
+                return GetResult(200, true, $"Пароль изменен. Новый пароль: {password}");
+            }
+        }
+
+        return GetResult(404, false, $"Такого юзера нету");
+    }
+
+    private Result GetResult(int statusCode, bool status, string resultMessage)
+    {
+        HttpContext.Response.StatusCode = statusCode;
+        return new Result(status, resultMessage);
+    }
+
+    private string GeneratePassword()
+        => "abc";
+
+    private User? GetUser(string username)
+        => _context.Users
+            .FirstOrDefault(user => user.Login == username);
 }
 
 public struct Result

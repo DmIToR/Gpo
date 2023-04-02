@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\errli\\OneDrive\\Desktop\\Project-InfoSystem\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {}
+    "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\errli\\OneDrive\\Desktop\\Project-InfoSystem\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {
+    "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-InfoSystem\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
+        "projectUniqueName": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
         "projectName": "InfoSystem",
-        "projectPath": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-InfoSystem\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
+        "projectPath": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
         "packagesPath": "C:\\Users\\errli\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-InfoSystem\\InfoSystem\\InfoSystem\\obj\\",
+        "outputPath": "C:\\Users\\errli\\OneDrive\\Desktop\\Project-Git\\InfoSystem\\InfoSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\errli\\AppData\\Roaming\\NuGet\\NuGet.Config"
