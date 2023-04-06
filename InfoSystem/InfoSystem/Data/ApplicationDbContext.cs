@@ -11,7 +11,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-        Database.EnsureCreated();
+        // Database.EnsureCreated();
     }
     
     public DbSet<StudentProfile> Students { get; set; }

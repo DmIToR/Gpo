@@ -1,4 +1,5 @@
-﻿using InfoSystem.Entities;
+﻿using System.Security.Claims;
+using InfoSystem.Entities;
 using InfoSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Controllers;
 
-[Authorize]
+
 [ApiController]
 [Route("[controller]")]
 public class AccountController : Controller
@@ -23,6 +24,24 @@ public class AccountController : Controller
     [HttpGet, Route("Test/GetUsers")]
     public List<User> GetUsers()
         => _userManager.Users.ToList();
+
+    [HttpPost, Route("Test/CreateAdmin")]
+    public async Task<IEnumerable<IdentityError>> CreateAdmin()
+    {
+        if (_userManager is null)
+            throw new Exception();
+        
+        var user = new User
+        {
+            UserName = "admin"
+        };
+
+        var result = await _userManager.CreateAsync(user, "A1dm3in!");
+        if (result.Succeeded)
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
+
+        return result.Errors;
+    }
 
     [HttpPost, Route("SignIn")]
     public async Task<bool> SignIn(SignInViewModel model)

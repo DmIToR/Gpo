@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Controllers;
 
+[Authorize(Policy = "Admin")]
 [ApiController]
 [Route("[controller]")]
 public class AdminController : Controller
@@ -17,7 +18,7 @@ public class AdminController : Controller
         _userManager = userManager;
     }
 
-    [HttpPost, Route("Tools/CreateUser"), Authorize(Policy = "Admin")]
+    [HttpPost, Route("Tools/CreateUser")]
     public async Task<bool> CreateUser(SignUpViewModel model)
     {
         if (!ModelState.IsValid)
