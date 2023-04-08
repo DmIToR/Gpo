@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using InfoSystem.Models;
 
 namespace InfoSystem.ViewModels;
 
@@ -12,4 +13,7 @@ public class SignUpViewModel
     
     [Required]
     public string Password { get; set; }
+    
+    [Required]
+    public UserRole Role { get; set; }
 }

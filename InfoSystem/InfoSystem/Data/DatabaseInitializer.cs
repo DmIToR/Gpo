@@ -10,14 +10,17 @@ public static class DatabaseInitializer
     {
         var userManager = scopeServiceProvider.GetService<UserManager<User>>();
         if (userManager is null)
-            throw new Exception();
-        
-        var user = new User
-        {
-            UserName = "admin"
-        };
+            return;
 
-        var result = userManager.CreateAsync(user, "A1dm3in").GetAwaiter().GetResult();
+        if (userManager.FindByNameAsync("admin").GetAwaiter().GetResult() is not null)
+            return;
+        
+        var user = new User { UserName = "admin" };
+
+        var result = userManager.CreateAsync(user, "A1dm3in!")
+            .GetAwaiter()
+            .GetResult();
+        
         if (result.Succeeded)
             userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin")).GetAwaiter().GetResult();
     }

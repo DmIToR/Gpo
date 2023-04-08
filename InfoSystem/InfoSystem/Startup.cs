@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using InfoSystem.Data;
 using InfoSystem.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem;

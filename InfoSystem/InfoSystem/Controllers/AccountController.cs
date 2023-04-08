@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Net;
+using System.Security.Claims;
 using InfoSystem.Entities;
 using InfoSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -21,42 +22,46 @@ public class AccountController : Controller
         _signInManager = signInManager;
     }
 
-    [HttpGet, Route("Test/GetUsers")]
-    public List<User> GetUsers()
-        => _userManager.Users.ToList();
-
-    [HttpPost, Route("Test/CreateAdmin")]
-    public async Task<IEnumerable<IdentityError>> CreateAdmin()
-    {
-        if (_userManager is null)
-            throw new Exception();
-        
-        var user = new User
-        {
-            UserName = "admin"
-        };
-
-        var result = await _userManager.CreateAsync(user, "A1dm3in!");
-        if (result.Succeeded)
-            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
-
-        return result.Errors;
-    }
+    // [HttpPost, Route("Test/CreateAdmin")]
+    // public async Task<IEnumerable<IdentityError>> CreateAdmin()
+    // {
+    //     if (_userManager is null)
+    //         throw new Exception();
+    //     
+    //     var user = new User
+    //     {
+    //         UserName = "admin"
+    //     };
+    //
+    //     var result = await _userManager.CreateAsync(user, "A1dm3in!");
+    //     if (result.Succeeded)
+    //         await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
+    //
+    //     return result.Errors;
+    // }
 
     [HttpPost, Route("SignIn")]
-    public async Task<bool> SignIn(SignInViewModel model)
+    public async Task<object> SignIn(SignInViewModel model)
     {
         if (!ModelState.IsValid)
-            return false;
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return new { ErrorMessage = "Неверные данные." };
+        }
 
         var user = await _userManager.FindByNameAsync(model.UserName);
         if (user is null)
         {
-            ModelState.AddModelError("", "User not found.");
-            return false;
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return new { ErrorMessage = "Пользователь не найден."};
         }
 
         var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-        return result.Succeeded;
+        
+        if (result.Succeeded)
+            return new { Id = user.Id };
+        
+        Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return new { ErrorMessage = "Неверный пароль." };
     }
 }
