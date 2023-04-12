@@ -41,6 +41,23 @@ public class Startup
                 config.RequireClaim(ClaimTypes.Role, "Student");
             });
         });
+        
+        var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name:MyAllowSpecificOrigins, 
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost",
+                            "http://localhost:3000",
+                            "http://localhost:5299")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains();
+                });
+        });
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,6 +67,13 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+
+        app.UseCors("_myAllowSpecificOrigins");
+        app.UseAuthorization();
 
         app.UseHttpsRedirection();
         app.UseRouting();

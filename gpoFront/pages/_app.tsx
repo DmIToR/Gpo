@@ -8,12 +8,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => { //@ts-ignore
-    var tempObject = JSON.parse(localStorage.getItem("auth"));
-    if(localStorage.getItem("auth") === null || tempObject === 'nologin') {
-      router.push(`/auth`);
-    } else router.push(`/profile`)
-  },[router]);
-
+    const authValue = JSON.parse(localStorage.getItem('auth'));
+    if (!authValue || authValue === 'nologin') {
+      router.push('/auth');
+    } else if (authValue === 'admin') {
+      router.push('/adminPanel');
+    } else {
+      router.push('/profile');
+    }
+  },[]);
 
   return (
     <Layout>
