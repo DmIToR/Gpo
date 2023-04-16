@@ -1,8 +1,12 @@
 ﻿using System.Security.Claims;
+using System.Text;
 using InfoSystem.Data;
 using InfoSystem.Entities;
+using InfoSystem.Modules;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace InfoSystem;
 
@@ -29,6 +33,24 @@ public class Startup
             .AddIdentity<User, Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = _configuration.GetValue<string>("Jwt:Issuer"),
+                    ValidateAudience = true,
+                    ValidAudience = _configuration.GetValue<string>("Jwt:Audience"),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            _configuration.GetValue<string>("Jwt:SecretKey")
+                        )
+                    ),
+                    ValidateLifetime = true
+                };
+            });
+
         services.AddAuthorization(options =>
         {
             options.AddPolicy("Admin", config =>
@@ -42,11 +64,11 @@ public class Startup
             });
         });
         
-        var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         services.AddCors(options =>
         {
-            options.AddPolicy(name:MyAllowSpecificOrigins, 
+            options.AddPolicy(name:myAllowSpecificOrigins, 
                 builder =>
                 {
                     builder.WithOrigins("http://localhost",
@@ -57,7 +79,6 @@ public class Startup
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
                 });
         });
-
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

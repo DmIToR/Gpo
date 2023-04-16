@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Security.Claims;
 using InfoSystem.Entities;
+using InfoSystem.Modules;
 using InfoSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,11 +16,13 @@ public class AccountController : Controller
 {
     private readonly UserManager<User> _userManager; 
     private readonly SignInManager<User> _signInManager;
+    private readonly IConfiguration _configuration;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _configuration = configuration;
     }
 
     // [HttpPost, Route("Test/CreateAdmin")]
@@ -57,9 +60,17 @@ public class AccountController : Controller
         }
 
         var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-        
+
+        var authManager = new AuthManager(_configuration.GetValue<string>("Jwt:SecretKey"));
+
         if (result.Succeeded)
-            return new { Id = user.Id };
+        {
+            return new
+            {
+                Id = user.Id, 
+                AuthToken = authManager.CreateToken(user)
+            };
+        }
         
         Response.StatusCode = StatusCodes.Status401Unauthorized;
         return new { ErrorMessage = "Неверный пароль." };
