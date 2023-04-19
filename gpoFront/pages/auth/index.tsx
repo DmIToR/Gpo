@@ -6,10 +6,12 @@ import { Visible } from "../../components/icons/visible";
 import { useModal } from "../../components/layout/ModalLayout";
 import StatusAuth from "../../components/modals/statusAuth";
 import { accountApi, profileApi } from "../../components/api";
+import { ProfileUserContext, Roles } from "../../components/context/profileUserContext";
 
 const Auth: NextPage = () => {
   const statusAuth = useModal();
   const router = useRouter();
+  const {setRole, setProfileUserInfo} = useContext(ProfileUserContext)
   const [modalMessage, setModalMessage] = useState("");
 
   const [login, setLogin] = useState("");
@@ -36,11 +38,11 @@ const Auth: NextPage = () => {
         }
         else {
             router.push('/profile')
-            console.log(result)
             localStorage.setItem("auth", JSON.stringify({'id': result.id, 'token': result.authToken}))
             profileApi.getUserProfile(result.id, result.authToken)
             .then((res) => {
-              console.log(res)
+              setProfileUserInfo(res.profile);
+              setRole(Roles[res.role])
             })
             .catch((error) => {
               console.error(error)

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Controllers;
 
-[Authorize(Policy = "Admin")]
+// [Authorize(Policy = "Admin")]
 [ApiController]
 [Route("[controller]")]
 public class AdminController : Controller

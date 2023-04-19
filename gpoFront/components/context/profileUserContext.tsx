@@ -1,29 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { profileApi } from "../api";
-import { ProfileUserDto } from "../interfaces/profileDto";
+import { ProfileUserInfo } from "../interfaces/profileDto";
+
+export const Roles = [
+  'Студент',
+  'Руководитель',
+  'Управление образованием',
+  'Секретарь'
+]
 
 interface Props {
   children: any;
 }
 
 const ProfileUserContext = React.createContext<{
-  profileUserInfo: ProfileUserDto;
+  profileUserInfo: ProfileUserInfo;
   setProfileUserInfo: any;
+  role: string,
+  setRole: any
 }>({
   profileUserInfo: {
-    group: "",
     id: "",
     name: "",
     surname: "",
     patronymic: "",
   },
-  setProfileUserInfo: (arg: ProfileUserDto) => {},
+  setProfileUserInfo: (arg: ProfileUserInfo) => {},
+  role: '',
+  setRole: (arg: string) => {}
 });
 
 const ProfileUserContextProvider = ({ children }: Props) => {
-  const [idLocal, setIdLocal] = useState("");
-  const [profileUserInfo, setProfileUserInfo] = useState<ProfileUserDto>({
-    group: "",
+  const [role, setRole] = useState('')
+  const [profileUserInfo, setProfileUserInfo] = useState<ProfileUserInfo>({
     id: "",
     name: "",
     surname: "",
@@ -32,37 +41,30 @@ const ProfileUserContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     //@ts-ignore
-    let tempRes: { id: string; token: string } = localStorage.getItem("auth"); //@ts-ignore
-    if (!tempRes) setIdLocal(tempRes?.id);
-    else setIdLocal("null");
-  }, []);
-
-  useEffect(() => {
-    //@ts-ignore
     let res = JSON.parse(localStorage.getItem("auth"));
-    if (!res) {
+    if (res) {
       if (
-        res?.id !== "null" &&
-        res?.id !== "nologin" &&
-        res?.id !== "admin" &&
-        res?.id
+        res.id &&
+        res.id !== "admin"
       ) {
         profileApi
-          .getUserProfile(res?.id, res?.token)
+          .getUserProfile(res.id, res.token)
           .then((res) => {
-            console.log(res);
-            setProfileUserInfo(res);
+            setProfileUserInfo(res.profile);
+            setRole(Roles[res.role])
           })
           .catch((error) => {
             console.error(error.response.data.errorMessage);
           });
       }
     }
-  }, [idLocal, profileUserInfo.id]);
+  }, []);
 
   return (
     <ProfileUserContext.Provider
       value={{
+        role,
+        setRole,
         profileUserInfo,
         setProfileUserInfo,
       }}

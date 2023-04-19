@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Controllers;
 
-[Authorize, ApiController, Route("[controller]")]
+// [Authorize]
+[ApiController, Route("[controller]")]
 public class ProfileController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -48,7 +49,7 @@ public class ProfileController : Controller
             if (profile is not null)
                 return new
                 {
-                    profile = profile,
+                    profile = profile as StudentProfile,
                     role = UserRole.Student
                 };
         }
@@ -60,7 +61,7 @@ public class ProfileController : Controller
             if (profile is not null) 
                 return new
                 {
-                    profile = profile,
+                    profile = profile as EducationDepartmentProfile,
                     role = UserRole.EducationDepartment
                 };
         }
@@ -72,7 +73,7 @@ public class ProfileController : Controller
             if (profile is not null) 
                 return new
                 {
-                    profile = profile,
+                    profile = profile as TeacherProfile,
                     role = UserRole.Teacher
                 };
         }
@@ -84,7 +85,7 @@ public class ProfileController : Controller
             if (profile is not null) 
                 return new
                 {
-                    profile = profile,
+                    profile = profile as SecretaryProfile,
                     role = UserRole.Secretary
                 };
         }

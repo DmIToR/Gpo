@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/InfoSystem.csproj": {}
+    "/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/InfoSystem.csproj": {}
   },
   "projects": {
-    "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/InfoSystem.csproj": {
+    "/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/InfoSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/InfoSystem.csproj",
+        "projectUniqueName": "/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/InfoSystem.csproj",
         "projectName": "InfoSystem",
-        "projectPath": "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/InfoSystem.csproj",
+        "projectPath": "/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/InfoSystem.csproj",
         "packagesPath": "/Users/vladislavzavzatov/.nuget/packages/",
-        "outputPath": "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/obj/",
+        "outputPath": "/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/vladislavzavzatov/.nuget/NuGet/NuGet.Config"

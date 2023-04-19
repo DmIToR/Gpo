@@ -10,5 +10,19 @@ export interface IModal {
 
 export interface IStatusAuth {
   statusAuth: any;
-  message: string
+  message: string;
+}
+
+export enum ProfileItems {
+  group = "Группа",
+  department = "Кафедра",
+  post = "Должность",
+  name = "Имя",
+  surname = "Фамилия",
+  patronymic = "Отчество",
+}
+
+export interface IProfileInfoItem {
+  name: keyof typeof ProfileItems;
+  value: string;
 }

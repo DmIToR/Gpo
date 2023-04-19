@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ProfileUserContext } from "../context/profileUserContext";
 import { Profile } from "../icons/profile";
 
 export const links: Array<{ name: string; link: string }> = [
@@ -13,6 +14,7 @@ export default function Header() {
   const [isAuth, setIsAuth] = useState(true);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [showLangs, setShowLangs] = useState(false);
+  const {profileUserInfo} = useContext(ProfileUserContext)
   const router = useRouter();
 
   const toggleLangBar = () => {
@@ -26,12 +28,14 @@ export default function Header() {
   };
 
   const unAuth = () => {
-    localStorage.setItem('auth', JSON.stringify('nologin'))
+    localStorage.removeItem("auth")
+    router.push("/auth");
+    setShowLangs(false);
+    setIsOpenDropDown(false);
   }
 
-  useEffect(() => { //@ts-ignore
-    var tempObject = JSON.parse(localStorage.getItem("auth"));
-    if (localStorage.getItem("auth") === null || tempObject === 'nologin') {
+  useEffect(() => {
+    if (!localStorage.getItem("auth")) {
       setIsAuth(true);
     } else setIsAuth(false);
   }, [isAuth, router]);
@@ -76,7 +80,7 @@ export default function Header() {
         <div className={`flex items-center relative mr-6`}>
           <div onClick={toggleLangBar} className="flex group">
             <p className="group-hover:text-blue-active cursor-pointer">
-              Александров А.А
+              {`${profileUserInfo.surname} ${profileUserInfo.name.slice(0,1) + '.' + profileUserInfo.patronymic.slice(0,1)}`}
             </p>
             <div
               className={`text-black group-hover:text-blue-active active:text-blue-active 

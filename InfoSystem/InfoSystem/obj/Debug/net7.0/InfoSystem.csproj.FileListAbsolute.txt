@@ -277,3 +277,11 @@ C:/Users/errli/OneDrive/Desktop/Project-Git/InfoSystem/InfoSystem/obj/Debug/net7
 /Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/obj/Debug/net7.0/InfoSystem.pdb
 /Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/obj/Debug/net7.0/InfoSystem.genruntimeconfig.cache
 /Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/obj/Debug/net7.0/ref/InfoSystem.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
+/Users/vladislavzavzatov/study/ГПО/Gpo/InfoSystem/InfoSystem/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
