@@ -6,7 +6,8 @@ import { Visible } from "../../components/icons/visible";
 import { useModal } from "../../components/layout/ModalLayout";
 import StatusAuth from "../../components/modals/statusAuth";
 import { accountApi, profileApi } from "../../components/api";
-import { ProfileUserContext, Roles } from "../../components/context/profileUserContext";
+import { ProfileUserContext } from "../../components/context/profileUserContext";
+import { Roles } from "../../components/interfaces/roles";
 
 const Auth: NextPage = () => {
   const statusAuth = useModal();
@@ -35,6 +36,12 @@ const Auth: NextPage = () => {
         if(login === 'admin') {
             router.push('/adminPanel')
             localStorage.setItem("auth", JSON.stringify({'id': 'admin', 'token': result.authToken}))
+            setProfileUserInfo({
+              id: 'admin',
+              name: 'Администратор',
+              surname: '',
+              patronymic: ''
+            })
         }
         else {
             router.push('/profile')
@@ -45,14 +52,26 @@ const Auth: NextPage = () => {
               setRole(Roles[res.role])
             })
             .catch((error) => {
-              console.error(error)
+              if(typeof(error.response.data.errorMessage) === "object") {
+                let temp: string[] = []
+                error.response.data.errorMessage.map((item: {code: string, description:string}) => {
+                  temp.push(item.description)
+                })
+                setModalMessage(temp.join('\n'))
+              } else setModalMessage(error.response.data.errorMessage)
+              statusAuth.open()
             })
         }
     }) 
     .catch((error) => {
-        console.log(error)
-        setModalMessage(error.response.data.errorMessage)
-        statusAuth.open()
+      if(typeof(error.response.data.errorMessage) === "object") {
+        let temp: string[] = []
+        error.response.data.errorMessage.map((item: {code: string, description:string}) => {
+          temp.push(item.description)
+        })
+        setModalMessage(temp.join('\n'))
+      } else setModalMessage(error.response.data.errorMessage)
+      statusAuth.open()
     })
   };
 

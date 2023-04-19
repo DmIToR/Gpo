@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { profileApi } from "../api";
 import { ProfileUserInfo } from "../interfaces/profileDto";
-
-export const Roles = [
-  'Студент',
-  'Руководитель',
-  'Управление образованием',
-  'Секретарь'
-]
+import { Roles } from "../interfaces/roles";
 
 interface Props {
   children: any;
@@ -56,6 +50,13 @@ const ProfileUserContextProvider = ({ children }: Props) => {
           .catch((error) => {
             console.error(error.response.data.errorMessage);
           });
+      } else if(res.id === 'admin') {
+        setProfileUserInfo({
+          id: 'admin',
+          name: 'Администратор',
+          surname: '',
+          patronymic: ''
+        })
       }
     }
   }, []);

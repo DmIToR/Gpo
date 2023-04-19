@@ -93,21 +93,31 @@ public class AdminController : Controller
         return new { Message = $"Пользователь {model.UserName} успешно создан." };
     }
     
-    [HttpDelete, Route("Tools/DeleteUser")]
-    public async Task<bool> DeleteUser(DeleteUserViewModel model)
+    [HttpDelete, Route("Tools/DeleteUser/{userName}")]
+    public async Task<object> DeleteUser(string userName)
     {
         if (!ModelState.IsValid)
-            return false;
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return new { ErrorMessage = "Неверная структура данных." };
+        }
 
-        var user = await _userManager.FindByNameAsync(model.UserName);
+        var user = await _userManager.FindByNameAsync(userName);
         if (user is null)
         {
-            ModelState.AddModelError("", "User does not exist.");
-            return false;
+            Response.StatusCode = StatusCodes.Status409Conflict;
+            // ModelState.AddModelError("", "User already exists.");
+            return new { ErrorMessage = "Пользователь с такими данными не существует." };
         }
 
         var result = await _userManager.DeleteAsync(user);
-        return result.Succeeded;
+        if (!result.Succeeded)
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return new { ErrorMessage = result.Errors };
+        }
+            
+        return new { Message = $"Пользователь {userName} успешно удалён." };
     }
 
     [HttpPatch, Route("Tools/ChangeUserPassword")]

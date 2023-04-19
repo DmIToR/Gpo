@@ -14,7 +14,7 @@ export default function Header() {
   const [isAuth, setIsAuth] = useState(true);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [showLangs, setShowLangs] = useState(false);
-  const {profileUserInfo} = useContext(ProfileUserContext)
+  const { profileUserInfo } = useContext(ProfileUserContext);
   const router = useRouter();
 
   const toggleLangBar = () => {
@@ -28,11 +28,11 @@ export default function Header() {
   };
 
   const unAuth = () => {
-    localStorage.removeItem("auth")
+    localStorage.removeItem("auth");
     router.push("/auth");
     setShowLangs(false);
     setIsOpenDropDown(false);
-  }
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("auth")) {
@@ -41,46 +41,55 @@ export default function Header() {
   }, [isAuth, router]);
 
   return (
-    <div className="fixed top-0 bg-white w-full px-16 flex justify-between">
-      <div className="flex items-center">
-        {!isAuth ? (
-          links.map((item, index) => (
+    <div className={`fixed top-0 bg-white border-b-2 w-full px-16 flex ${profileUserInfo.id !== "admin" ? 'justify-between' : 'justify-end'}`}>
+      {profileUserInfo.id !== "admin" && (
+        <div className="flex items-center">
+          {!isAuth ? (
+            links.map((item, index) => (
+              <div
+                key={index}
+                onClick={() => router.push(`${item.link}`)}
+                className={`
+              ${item.link && "cursor-pointer hover:text-blue-active"} 
+              ${
+                router.asPath === item.link
+                  ? "border-b-2 border-blue-active text-blue-active"
+                  : "text-black"
+              }
+              py-6 mx-6 transition-all duration-500`}
+              >
+                {item.name}
+              </div>
+            ))
+          ) : (
             <div
-              key={index}
-              onClick={() => router.push(`${item.link}`)}
+              onClick={() => router.push(`/auth`)}
               className={`
-            ${item.link && "cursor-pointer hover:text-blue-active"} 
-            ${
-              router.asPath === item.link
-                ? "border-b-2 border-blue-active text-blue-active"
-                : "text-black"
-            }
-            py-6 mx-6 transition-all duration-500`}
+              ${"/auth" && "cursor-pointer hover:text-blue-active"} 
+              ${
+                router.asPath === "/auth"
+                  ? "border-b-2 border-blue-active text-blue-active"
+                  : "text-black"
+              }
+              py-6 mx-6 transition-all duration-500`}
             >
-              {item.name}
+              Аутентификация
             </div>
-          ))
-        ) : (
-          <div
-            onClick={() => router.push(`/auth`)}
-            className={`
-            ${"/auth" && "cursor-pointer hover:text-blue-active"} 
-            ${
-              router.asPath === "/auth"
-                ? "border-b-2 border-blue-active text-blue-active"
-                : "text-black"
-            }
-            py-6 mx-6 transition-all duration-500`}
-          >
-            Аутентификация
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
+
       {!isAuth && (
         <div className={`flex items-center relative mr-6`}>
-          <div onClick={toggleLangBar} className="flex group">
+          <div onClick={toggleLangBar} className="flex group py-6">
             <p className="group-hover:text-blue-active cursor-pointer">
-              {`${profileUserInfo.surname} ${profileUserInfo.name.slice(0,1) + '.' + profileUserInfo.patronymic.slice(0,1)}`}
+              {profileUserInfo.id === "admin"
+                ? "Администратор"
+                : `${profileUserInfo.surname} ${
+                    profileUserInfo.name.slice(0, 1) +
+                    "." +
+                    profileUserInfo.patronymic.slice(0, 1)
+                  }`}
             </p>
             <div
               className={`text-black group-hover:text-blue-active active:text-blue-active 
@@ -92,9 +101,11 @@ export default function Header() {
 
           <div
             className={`${
-              isOpenDropDown ? "h-10" : "h-0"
+              isOpenDropDown
+                ? "h-10 border-b-2 border-l-2 border-r-2"
+                : "h-0 overflow-hidden"
             } transition-all duration-500
-            absolute w-full bg-white top-[74px] z-10 rounded-b-lg`}
+             absolute w-full bg-white top-[74px] z-10 rounded-b-lg`}
           >
             <div
               className={`${

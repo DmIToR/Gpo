@@ -68,4 +68,19 @@ export class HttpService {
 
         return response.data;
     }
+
+    protected async patch<T>(path: string, body: T, token: string) {
+        const response = await this.httpClient.patch(
+            `${this.baseApi}/${path}`,
+            body,
+            {
+                headers: {
+                    Authorization: `${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        return response.data;
+    }
 }
