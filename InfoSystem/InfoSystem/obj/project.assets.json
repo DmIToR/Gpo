@@ -2060,19 +2060,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\roman\\.nuget\\packages\\": {}
+    "/Users/vladislavzavzatov/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
+      "projectUniqueName": "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/InfoSystem.csproj",
       "projectName": "InfoSystem",
-      "projectPath": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\InfoSystem.csproj",
-      "packagesPath": "C:\\Users\\roman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\obj\\",
+      "projectPath": "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/InfoSystem.csproj",
+      "packagesPath": "/Users/vladislavzavzatov/.nuget/packages/",
+      "outputPath": "/Users/vladislavzavzatov/study/ГПО/InfoSystem/InfoSystem/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\roman\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/vladislavzavzatov/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -2140,7 +2140,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }
