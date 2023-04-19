@@ -21,16 +21,17 @@ public class ProfileController : Controller
         _userManager = userManager;
     }
 
-    [HttpGet, Route("{username}")]
-    public async Task<object> GetProfile(string username)
+    [HttpGet, Route("{id}")]
+    public async Task<object> GetProfile(string id)
     {
         if (!ModelState.IsValid)
         {
             Response.StatusCode = StatusCodes.Status400BadRequest;
             return new { ErrorMessage = "Неверная структура данных." };
         }
-        
-        var user = await _userManager.FindByNameAsync(username);
+      
+        var user = await _userManager.FindByIdAsync(id);
+      
         if (user is null)
         {
             Response.StatusCode = StatusCodes.Status404NotFound;
@@ -43,9 +44,49 @@ public class ProfileController : Controller
         if (claims.Any(c => c.Value == "Student"))
         {
             profile = await _context.Students.FirstOrDefaultAsync(p => p.Id == user.Id);
+
+            if (profile is not null)
+                return new
+                {
+                    profile = profile,
+                    role = UserRole.Student
+                };
+        }
+        
+        if (claims.Any(c => c.Value == "EducationDepartment"))
+        {
+            profile = await _context.EducationDepartments.FirstOrDefaultAsync(p => p.Id == user.Id);
             
             if (profile is not null) 
-                return profile;
+                return new
+                {
+                    profile = profile,
+                    role = UserRole.EducationDepartment
+                };
+        }
+        
+        if (claims.Any(c => c.Value == "Teacher"))
+        {
+            profile = await _context.Teachers.FirstOrDefaultAsync(p => p.Id == user.Id);
+            
+            if (profile is not null) 
+                return new
+                {
+                    profile = profile,
+                    role = UserRole.Teacher
+                };
+        }
+        
+        if (claims.Any(c => c.Value == "Secretary"))
+        {
+            profile = await _context.Secretaries.FirstOrDefaultAsync(p => p.Id == user.Id);
+            
+            if (profile is not null) 
+                return new
+                {
+                    profile = profile,
+                    role = UserRole.Secretary
+                };
         }
 
         Response.StatusCode = StatusCodes.Status404NotFound;

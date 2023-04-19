@@ -62,6 +62,21 @@ public class Startup
             {
                 config.RequireClaim(ClaimTypes.Role, "Student");
             });
+            
+            options.AddPolicy("EducationDepartment", config =>
+            {
+                config.RequireClaim(ClaimTypes.Role, "EducationDepartment");
+            });
+            
+            options.AddPolicy("Teacher", config =>
+            {
+                config.RequireClaim(ClaimTypes.Role, "Teacher");
+            });
+            
+            options.AddPolicy("Secretary", config =>
+            {
+                config.RequireClaim(ClaimTypes.Role, "Secretary");
+            });
         });
         
         const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";

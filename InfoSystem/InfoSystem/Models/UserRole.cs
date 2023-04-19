@@ -5,5 +5,6 @@ public enum UserRole
     Student,
     Teacher,
     EducationDepartment,
-    Admin
+    Secretary,
+    Admin,
 }

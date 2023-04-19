@@ -1,6 +1,4 @@
-﻿using InfoSystem.Entities;
-
-namespace InfoSystem.Models;
+﻿namespace InfoSystem.Models;
 
 public class StudentProfile : Profile
 {

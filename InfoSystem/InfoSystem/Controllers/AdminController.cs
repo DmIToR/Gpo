@@ -26,6 +26,16 @@ public class AdminController : Controller
     [HttpPost, Route("Tools/CreateUser")]
     public async Task<object> CreateUser(SignUpViewModel model)
     {
+        var k = model.Role.ToString();
+
+        var isNumber = int.TryParse(k, out var res);
+
+        if (isNumber)
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return new { ErrorMessage = "Не существует такой роли" };
+        }
+        
         if (!ModelState.IsValid)
         {
             Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -57,8 +67,27 @@ public class AdminController : Controller
             user, 
             new Claim(ClaimTypes.Role, model.Role.ToString())
         );
+        
+        if (model.Role == UserRole.Student)
+        {
+            _context.Add(new StudentProfile { Id = user.Id });
+        }
+        
+        if (model.Role == UserRole.Teacher)
+        {
+            _context.Add(new TeacherProfile { Id = user.Id });
+        }
+        
+        if (model.Role == UserRole.Secretary)
+        {
+            _context.Add(new SecretaryProfile { Id = user.Id });
+        }
+        
+        if (model.Role == UserRole.EducationDepartment)
+        {
+            _context.Add(new EducationDepartmentProfile { Id = user.Id });
+        }
 
-        _context.Add(new StudentProfile { Id = user.Id });
         await _context.SaveChangesAsync();
 
         return new { Message = $"Пользователь {model.UserName} успешно создан." };

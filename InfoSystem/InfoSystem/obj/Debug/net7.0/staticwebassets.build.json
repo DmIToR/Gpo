@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "5F2734Oo2gb3JU9L8vQJcKb+UXbcO4LCUu5TRgXlfw8=",
+  "Hash": "WIhCjeXp2KpZPCe6X/eW/qVi5nAHhD1W7QAuNQxotos=",
   "Source": "InfoSystem",
   "BasePath": "_content/InfoSystem",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "InfoSystem\\wwwroot",
+      "Source": "InfoSystem",
+      "ContentRoot": "C:\\Users\\roman\\Gpo\\InfoSystem\\InfoSystem\\wwwroot\\",
+      "BasePath": "_content/InfoSystem",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }
