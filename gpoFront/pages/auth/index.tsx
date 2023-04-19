@@ -1,16 +1,19 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import accountAPI from "../../components/api/accountApi";
+import { useContext, useState } from "react";
 import { Invisible } from "../../components/icons/invisible";
 import { Visible } from "../../components/icons/visible";
 import { useModal } from "../../components/layout/ModalLayout";
 import StatusAuth from "../../components/modals/statusAuth";
+import { accountApi, profileApi } from "../../components/api";
+import { ProfileUserContext } from "../../components/context/profileUserContext";
+import axios from "axios";
 
 const Auth: NextPage = () => {
   const statusAuth = useModal();
   const router = useRouter();
   const [modalMessage, setModalMessage] = useState("");
+  const {setProfileUserInfo} = useContext(ProfileUserContext)
 
   const [login, setLogin] = useState("");
   const handleLogin = (e: any) => {
@@ -28,7 +31,14 @@ const Auth: NextPage = () => {
   };
 
   const authUser = async () => {
-    accountAPI.signIn(login, password)
+    // const response = await axios.post('http://localhost:5299/Account/Login', {
+    //   email: 'test@mail.ru',
+    //   password: 'Test1!'
+    // })
+    // console.log(response)
+
+
+    accountApi.signIn(login, password)
     .then((result) => {
         if(login === 'admin') {
             router.push('/adminPanel')
@@ -37,11 +47,24 @@ const Auth: NextPage = () => {
         else {
             router.push('/profile')
             localStorage.setItem("auth", JSON.stringify(result.id))
+            // axios.post('http://localhost:5299/Account/Login', {
+            //   login: login,
+            //   password: password
+            // }).then((res) => console.log(res))
+            // .catch((error) => console.log(error))
+
+            profileApi.getUserProfile('32724b20-ff35-49b6-a23f-39881d62eae3')
+            .then((res) => {
+              console.log(res)
+            })
+            .catch((error) => {
+              console.error(error)
+            })
         }
     }) 
     .catch((error) => {
         console.log(error)
-        setModalMessage(error.response.data.errorMessage)
+        // setModalMessage(error.response.data.errorMessage)
         statusAuth.open()
     })
   };
