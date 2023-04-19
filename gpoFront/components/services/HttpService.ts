@@ -13,20 +13,29 @@ export class HttpService {
         };
     }
 
-    protected async get(path: string) {
-        const response = await this.httpClient.get(`${this.baseApi}/${path}`, {
-            headers: this.baseHeaders,
+    protected async get(path: string, token?: string) {
+        const response = await this.httpClient.get(`${this.baseApi}/${path}`, 
+        token ? {
+            headers: {
+                Authorization: `${token}`,
+                'Content-Type': 'application/json'
+            }
+        } : {
+            headers: this.baseHeaders
         });
 
         return response.data;
     }
 
-    protected async post<T>(path: string, body: T) {
+    protected async post<T>(path: string, body: T, token: string) {
         const response = await this.httpClient.post(
             `${this.baseApi}/${path}`,
             body,
             {
-                headers: this.baseHeaders,
+                headers: {
+                    Authorization: `${token}`,
+                    'Content-Type': 'application/json'
+                }
             }
         );
 
@@ -46,10 +55,15 @@ export class HttpService {
     }
     
 
-    protected async delete(path: string) {
+    protected async delete(path: string, token: string) {
         const response = await this.httpClient.delete(
-            `${this.baseApi}/${path}`
-           
+            `${this.baseApi}/${path}`,
+            {
+                headers: {
+                    Authorization: `${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
         );
 
         return response.data;

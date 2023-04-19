@@ -21,7 +21,7 @@ const ProfileUserContext = React.createContext<{
 });
 
 const ProfileUserContextProvider = ({ children }: Props) => {
-  const [idLocal, setIdLocal] = useState('')
+  const [idLocal, setIdLocal] = useState("");
   const [profileUserInfo, setProfileUserInfo] = useState<ProfileUserDto>({
     group: "",
     id: "",
@@ -31,25 +31,34 @@ const ProfileUserContextProvider = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    let tempId = localStorage.getItem("auth")
-    if(tempId) setIdLocal(tempId)
-    else setIdLocal('null')
-  },[])
+    //@ts-ignore
+    let tempRes: { id: string; token: string } = localStorage.getItem("auth"); //@ts-ignore
+    if (!tempRes) setIdLocal(tempRes?.id);
+    else setIdLocal("null");
+  }, []);
 
-  useEffect(() => { //@ts-ignore
-    let id = JSON.parse(localStorage.getItem("auth"))
-    if(id !== 'null' && id !== 'nologin' && id !== 'admin' && id) {
-      profileApi.getUserProfile(id)
-      .then((res) => {
-        console.log(res)
-        setProfileUserInfo(res)
-      })
-      .catch((error) => {
-        console.error(error.response.data.errorMessage)
-      })
+  useEffect(() => {
+    //@ts-ignore
+    let res = JSON.parse(localStorage.getItem("auth"));
+    if (!res) {
+      if (
+        res?.id !== "null" &&
+        res?.id !== "nologin" &&
+        res?.id !== "admin" &&
+        res?.id
+      ) {
+        profileApi
+          .getUserProfile(res?.id, res?.token)
+          .then((res) => {
+            console.log(res);
+            setProfileUserInfo(res);
+          })
+          .catch((error) => {
+            console.error(error.response.data.errorMessage);
+          });
+      }
     }
-    
-  },[idLocal, profileUserInfo.id])
+  }, [idLocal, profileUserInfo.id]);
 
   return (
     <ProfileUserContext.Provider

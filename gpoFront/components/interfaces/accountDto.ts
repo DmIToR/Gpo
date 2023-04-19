@@ -3,6 +3,7 @@ export interface accountData {
     password: string
 }
 
-export interface accountId {
+export interface accountSignIn {
     id: string
+    authToken: string
 }

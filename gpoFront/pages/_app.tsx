@@ -11,9 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     //@ts-ignore
     const authValue = JSON.parse(localStorage.getItem("auth"));
-    if (!authValue || authValue === "nologin") {
+    if (!authValue || authValue.id === "nologin") {
       router.push("/auth");
-    } else if (authValue === "admin") {
+    } else if (authValue.id === "admin") {
       router.push("/adminPanel");
     } else {
       router.push("/profile");

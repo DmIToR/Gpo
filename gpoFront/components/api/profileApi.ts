@@ -6,8 +6,8 @@ class profileApi extends ApiService {
         super(`Profile`);
     }
 
-    getUserProfile(id: string): Promise<ProfileUserDto> {
-        return this.get(`${id}`)
+    getUserProfile(id: string, token: string): Promise<ProfileUserDto> {
+        return this.get(`${id}`, token)
     }
 }
 
