@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using InfoSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InfoSystem.Models;
+namespace InfoSystem.Models.StudyPlanModels;
 
-public class Profile
+public class Course
 {
     public Guid Id { get; set; }
+    public Guid StudyProgramId { get; set; }
+    
+    public string Name { get; set; }
 }

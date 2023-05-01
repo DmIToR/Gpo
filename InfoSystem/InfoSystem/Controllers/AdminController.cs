@@ -58,7 +58,7 @@ public class AdminController : Controller
             new Claim(ClaimTypes.Role, model.Role.ToString())
         );
 
-        _context.Add(new StudentProfile { Id = user.Id });
+        _context.Add(new User { Id = user.Id });
         await _context.SaveChangesAsync();
 
         return new { Message = $"Пользователь {model.UserName} успешно создан." };
