@@ -2,12 +2,15 @@
 using InfoSystem.Data;
 using InfoSystem.Entities;
 using InfoSystem.Models;
+using InfoSystem.Models.CompanyModels;
 using InfoSystem.Models.DepartmentModels;
+using InfoSystem.Models.PracticeModels;
 using InfoSystem.Models.StudyPlanModels;
 using InfoSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Novacode;
 
 namespace InfoSystem.Controllers;
 
@@ -64,7 +67,7 @@ public class AdminController : Controller
         {
             var faculty = new Faculty
             {
-                Name = "FSU"
+                Name = "Факультет систем управления"
             };
             
             _context.Add(faculty);
@@ -80,7 +83,7 @@ public class AdminController : Controller
 
             var studyProgram = new StudyProgram
             {
-                Name = "Баклавр"
+                Name = "Бакалавриат"
             };
                 
             _context.Add(studyProgram);
@@ -98,7 +101,7 @@ public class AdminController : Controller
             var department = new Department
             {
                 FacultyId = faculty.Id,
-                Name = "АСУ"
+                Name = "Автоматизированных систем упрвления"
             };
             
             _context.Add(department);
@@ -140,13 +143,22 @@ public class AdminController : Controller
                 GroupId = group.Id,
                 StudentId = student.Id
             });
+            
             await _context.SaveChangesAsync();
             
-            //  _context.Add(new User { Id = user.Id });
             return new { Message = $"Пользователь {model.UserName} успешно создан(студент)." };
         }
 
-        //_context.Add(new User { Id = user.Id });
+        if (model.Role.ToString() == "Teacher")
+        {
+            var teacher = _context.Add(new Teacher()
+            {
+                UserId = user.Id
+            }); // доделать учителя
+            
+            return new { Message = $"Пользователь {model.UserName} успешно создан(учитель)." };
+        }
+
         _context.ChangeTracker.Clear();
         await _context.SaveChangesAsync();
 
@@ -278,12 +290,7 @@ public class AdminController : Controller
                 studyType.StudyTypeName
             };
         }
-
-        if (role == "Teacher")
-        {
-            
-        }
-
+        
         return new
         {
             user = role
@@ -293,4 +300,146 @@ public class AdminController : Controller
     [HttpGet, Route("Tools/GetUsers")]
     public List<User> GetUsers()
         => _userManager.Users.ToList();
+
+    [HttpPost, Route("Tools/CreateDocument")]
+    public async Task<object> CreateDocument(string id)
+    {
+        var city = new City()
+        {
+            Name = "Москва"
+        };
+        
+        _context.Add(city);
+        await _context.SaveChangesAsync();
+        
+        var company = new Company()
+        {
+            CityId = city.Id,
+            Address = "Ул.Есенина д.6",
+            Email = "vk@mail.ru",
+            Itn = 55,
+            Name = "Общество с ограниченной ответственностью «ВКонтакте»",
+            ShortName = "ООО «ВК»"
+        };
+            
+        _context.Add(company);
+        await _context.SaveChangesAsync();
+        
+        var signatory = new Signatory()
+        {
+            Name = "В.",
+            LastName = "Степанов",
+            Patronymic = "С.",
+            Job = "генеральный директор"
+        };
+            
+        _context.Add(signatory);
+        await _context.SaveChangesAsync();
+        
+        var contact = new ContactPerson()
+        {       
+            Name = "Василий",
+            LastName = "Степанов",
+            Patronymic = "Сергеевич",
+            PhoneNumber = "8-931-312-41-41",
+            CompanyId = company.Id,
+            Email = "stepanovVK@mail.ru",
+            Head = true,
+            Signatory = true
+        };
+            
+        _context.Add(contact);
+        await _context.SaveChangesAsync();
+        
+        var practiceKind = new PracticeKind()
+        {
+            Name = "Производственная практика: "
+        };
+            
+        _context.Add(practiceKind);
+        await _context.SaveChangesAsync();
+        
+        var practiceType = new PracticeType()
+        {
+            PracticeKindId = practiceKind.Id,
+            Name = "Научно-исследовательская работа"
+        };
+            
+        _context.Add(practiceType);
+        await _context.SaveChangesAsync();
+        
+        var studentGroup = _context.StudentGroups
+            .Select(s => s)
+            .First(s => s.StudentId.ToString() == id);
+        
+        var group = _context.Groups
+            .Select(s => s)
+            .First(s => s.Id.ToString() == studentGroup.GroupId.ToString());
+        
+        var practice = new Practice()
+        {
+            StudyPlanId = group.StudyPlanId,
+            PracticeTypeId = practiceType.Id,
+            Semester = 6
+        };
+        
+        _context.Add(practice);
+        await _context.SaveChangesAsync();
+        
+        var authority = new Authority()
+        {
+             SignatoryId = signatory.Id,
+             Number = "55",
+             Start = DateTime.Now
+        };
+            
+        _context.Add(authority);
+        await _context.SaveChangesAsync();
+
+        var practicePeriod = new PracticePeriod()
+        {
+            PracticeId = practice.Id,
+            PracticeStart = DateTime.Now,
+            PracticeEnd = new DateTime(2023, 08, 22), 
+        };
+            
+        _context.Add(practicePeriod);
+        await _context.SaveChangesAsync();
+        
+        var contract = new Contract()
+        {
+            CompanyId = company.Id,
+            SignatoryId = signatory.Id,
+            ContactPersonId = contact.Id,
+            Number = 5,
+            Date = DateTime.Now
+        };
+            
+        _context.Add(contract);
+        await _context.SaveChangesAsync();
+        
+        var practiceContract = new PracticeContract()
+        {
+            PracticeId = practice.Id,
+            ContractId = contract.Id,
+        };
+            
+        _context.Add(practiceContract);
+        await _context.SaveChangesAsync();
+        
+        // string templatePath = @"C:\Users\roman\Gpo\InfoSystem\InfoSystem\Dog.docx";
+        //
+        // string variable1Name = "ЗАЛУПА";
+        // string variable1Value = "Хуй";
+        //
+        // DocX doc = DocX.Load(templatePath);
+        //
+        // doc.ReplaceText(variable1Name, variable1Value);
+        //
+        // doc.SaveAs(templatePath);
+        // doc.Dispose();
+
+        return new { Message = group.StudyPlanId };
+    }
 }
+
