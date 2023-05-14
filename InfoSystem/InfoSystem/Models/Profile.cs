@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Models;
 
-public class Profile
+public abstract class Profile
 {
-    public Guid Id { get; set; }
+    
 }

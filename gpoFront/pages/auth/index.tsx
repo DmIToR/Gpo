@@ -48,6 +48,7 @@ const Auth: NextPage = () => {
             localStorage.setItem("auth", JSON.stringify({'id': result.id, 'token': result.authToken}))
             profileApi.getUserProfile(result.id, result.authToken)
             .then((res) => {
+              console.log(res)
               setProfileUserInfo(res.profile);
               setRole(Roles[res.role])
             })

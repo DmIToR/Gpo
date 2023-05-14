@@ -141,7 +141,8 @@ public class AdminController : Controller
             {
                 Id = group.Id,
                 GroupId = group.Id,
-                StudentId = student.Id
+                StudentId = student.Id,
+                IsCurrent = true
             });
             
             await _context.SaveChangesAsync();

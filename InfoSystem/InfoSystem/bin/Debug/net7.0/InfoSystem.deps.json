@@ -353,7 +353,7 @@
         "runtime": {
           "lib/net20/Microsoft.Office.Interop.Word.dll": {
             "assemblyVersion": "12.0.0.0",
-            "fileVersion": "12.0.4518.1014"
+            "fileVersion": "0.0.0.0"
           }
         }
       },

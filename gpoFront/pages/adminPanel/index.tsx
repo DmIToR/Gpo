@@ -134,7 +134,6 @@ const adminPanel: NextPage = () => {
     if(username) {
       adminApi.getUserByUsername(username)
       .then((res) => {
-        console.log(res)
         setUserInfo(res)
       })
       .catch((error) => {
