@@ -219,3 +219,13 @@ C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\refint\InfoSystem.dll
 C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\InfoSystem.pdb
 C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\InfoSystem.genruntimeconfig.cache
 C:\Users\roman\Gpo\InfoSystem\InfoSystem\obj\Debug\net7.0\ref\InfoSystem.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\Microsoft.Office.Interop.Word.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\DocumentFormat.OpenXml.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\System.IO.Packaging.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\DocXCore.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\roman\Gpo\InfoSystem\InfoSystem\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
