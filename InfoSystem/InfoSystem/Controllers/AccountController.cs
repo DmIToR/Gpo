@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Security.Claims;
+using InfoSystem.Data;
 using InfoSystem.Entities;
+using InfoSystem.Models.CompanyModels;
 using InfoSystem.Modules;
 using InfoSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Controllers;
 
-
 [ApiController]
 [Route("[controller]")]
 public class AccountController : Controller
@@ -17,12 +18,14 @@ public class AccountController : Controller
     private readonly UserManager<User> _userManager; 
     private readonly SignInManager<User> _signInManager;
     private readonly IConfiguration _configuration;
+    private readonly ApplicationDbContext _context;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, ApplicationDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
+        _context = context;
     }
 
     // [HttpPost, Route("Test/CreateAdmin")]
@@ -74,5 +77,98 @@ public class AccountController : Controller
         
         Response.StatusCode = StatusCodes.Status401Unauthorized;
         return new { ErrorMessage = "Неверный пароль." };
+    }
+
+    [HttpPost, Route("Tools/CreateDocumentInfo")]
+    public async Task<object> CreateDocumentInfo(string cityName, string companyName, int itn, string companyShortName,
+        string companyAddress, string companyPhoneNumber, string companyEmail, string name, string lastName, 
+        string patronymic, string number, string email, string job, bool isHead, bool isSignatory)
+    {
+        var city = _context.Cities
+            .Select(f => f)
+            .FirstOrDefault(f => f.Name == name);
+
+        if (city != null)
+        {
+            Response.StatusCode = StatusCodes.Status409Conflict;
+            return new
+            {
+                Message = $"Город {name} уже есть в базе данных"
+            };
+        }
+
+        _context.Cities.Add(new City()
+        {
+            Name = name
+        });
+        
+        await _context.SaveChangesAsync();
+
+        var company = _context.Companies
+            .Select(f => f)
+            .FirstOrDefault(f => f.Name == companyName);
+
+        if (company != null)
+        {
+            Response.StatusCode = StatusCodes.Status409Conflict;
+            return new
+            {
+                Message = $"Такая компания {name} уже есть в базе данных"
+            };
+        }
+        
+        city = _context.Cities
+            .Select(f => f)
+            .FirstOrDefault(f => f.Name == name);
+
+        _context.Companies.Add(new Company()
+        {
+            CityId = city.Id,
+            Name = companyName,
+            Itn = itn,
+            ShortName = companyShortName,
+            Address = companyAddress,
+            PhoneNumber = companyPhoneNumber,
+            Email = companyEmail
+        });
+        
+        await _context.SaveChangesAsync();
+
+        var contactPerson = _context.ContactPersons
+            .Select(f => f)
+            .FirstOrDefault(f => f.PhoneNumber == number && f.Email == email);
+
+        if (contactPerson != null)
+        {
+            Response.StatusCode = StatusCodes.Status409Conflict;
+            return new
+            {
+                Message = $"Такое контактное лицо {name} уже есть в базе данных"
+            };
+        }
+        
+        company = _context.Companies
+            .Select(f => f)
+            .FirstOrDefault(f => f.Name == companyName);
+
+        _context.ContactPersons.Add(new ContactPerson()
+        {
+            CompanyId = company.Id,
+            Name = name,
+            LastName = lastName,
+            Patronymic = patronymic,
+            PhoneNumber = number,
+            Email = email,
+            Job = job,
+            Head = isHead,
+            Signatory = isSignatory,
+        });
+        
+        await _context.SaveChangesAsync();
+        Response.StatusCode = StatusCodes.Status200OK;
+        return new
+        {
+            Message = $"Данные для догвоора успешно заполнены"
+        };
     }
 }
