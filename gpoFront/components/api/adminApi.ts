@@ -31,6 +31,10 @@ class AdminApi extends ApiService {
     getUsers() {
         return this.get(`Tools/GetUsers`,'')
     }
+
+    getUserByUsername(userName: string) {
+        return this.get(`Tools/GetUserByUsername/${userName}`, '')
+    }
 }
 
 export default new AdminApi();

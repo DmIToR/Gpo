@@ -14,7 +14,7 @@ using Novacode;
 
 namespace InfoSystem.Controllers;
 
-[Authorize(Policy = "Admin")]
+// [Authorize(Policy = "Admin")]
 [ApiController]
 [Route("[controller]")]
 public class AdminController : Controller
@@ -75,7 +75,7 @@ public class AdminController : Controller
 
             var studyType = new StudyType
             {
-                StudyTypeName = "очное"
+                StudyTypeName = "Очный"
             };
                 
             _context.Add(studyType);
@@ -165,21 +165,31 @@ public class AdminController : Controller
         return new { Message = $"Пользователь {model.UserName} успешно создан." };
     }
     
-    [HttpDelete, Route("Tools/DeleteUser")]
-    public async Task<bool> DeleteUser(DeleteUserViewModel model)
+    [HttpDelete, Route("Tools/DeleteUser/{userName}")]
+    public async Task<object> DeleteUser(string userName)
     {
         if (!ModelState.IsValid)
-            return false;
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return new { ErrorMessage = "Неверная структура данных." };
+        }
 
-        var user = await _userManager.FindByNameAsync(model.UserName);
+        var user = await _userManager.FindByNameAsync(userName);
         if (user is null)
         {
-            ModelState.AddModelError("", "User does not exist.");
-            return false;
+            Response.StatusCode = StatusCodes.Status409Conflict;
+            // ModelState.AddModelError("", "User already exists.");
+            return new { ErrorMessage = "Пользователь с такими данными не существует." };
         }
 
         var result = await _userManager.DeleteAsync(user);
-        return result.Succeeded;
+        if (!result.Succeeded)
+        {
+            Response.StatusCode = StatusCodes.Status400BadRequest;
+            return new { ErrorMessage = result.Errors };
+        }
+            
+        return new { Message = $"Пользователь {userName} успешно удалён." };
     }
 
     [HttpPatch, Route("Tools/ChangeUserPassword")]
@@ -218,22 +228,23 @@ public class AdminController : Controller
         return new { Message = $"Пароль для пользователя {user.UserName} успешно изменен." };
     }
     
-    [HttpGet, Route("Tools/GetUserById")]
-    public async Task<object> GetUserById(string id)
+    [HttpGet, Route("Tools/GetUserByUsername/{userName}")]
+    public async Task<object> GetUserByUsername(string userName)
     {
-        var userById = await _userManager.FindByIdAsync(id);
-        if (userById is null)
+        // var userById = await _userManager.FindByIdAsync(id);
+        var user = await _userManager.FindByNameAsync(userName);
+        if (user is null)
         {
             Response.StatusCode = StatusCodes.Status404NotFound;
             return new { ErrorMessage = "Пользователь не найден."};
         }
         
-        var role = _userManager.GetClaimsAsync(userById).Result.First().Value;
+        var role = _userManager.GetClaimsAsync(user).Result.First().Value;
         if (role == "Student")
         {
             var student = _context.Students
                 .Select(s => s)
-                .First(s => s.Id.ToString() == id);
+                .First(s => s.Id.ToString() == user.Id.ToString());
 
             var groupId = _context.StudentGroups
                 .Select(s => s)
