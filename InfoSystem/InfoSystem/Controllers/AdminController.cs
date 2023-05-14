@@ -305,69 +305,97 @@ public class AdminController : Controller
         {
             var student = _context.Students
                 .Select(s => s)
-                .First(s => s.Id.ToString() == id);
+                .FirstOrDefault(s => s.Id.ToString() == id);
 
-            var groupId = _context.StudentGroups
-                .Select(s => s)
-                .First(s => s.StudentId.ToString() == student.Id.ToString());
-
-            var group = _context.Groups
-                .Select(s => s)
-                .First(s => s.Id.ToString() == groupId.Id.ToString());
-
-            var studyPlan = _context.StudyPlans
-                .Select(s => s)
-                .First(s => s.Id.ToString() == group.StudyPlanId.ToString());
-
-            var department = _context.Departments
-                .Select(s => s)
-                .First(s => s.Id.ToString() == group.DepartmentId.ToString());
-
-            var course = _context.Courses
-                .Select(s => s)
-                .First(s => s.Id.ToString() == studyPlan.CourseId.ToString());
-
-            var studyProgram = _context.StudyPrograms
-                .Select(s => s)
-                .First(s => s.Id.ToString() == course.StudyProgramId.ToString());
-
-            var faculty = _context.Faculties
-                .Select(s => s)
-                .First(s => s.Id.ToString() == department.FacultyId.ToString());
-
-            var studyType = _context.StudyTypes
-                .Select(s => s)
-                .First(s => s.Id.ToString() == studyPlan.StudyTypeId.ToString());
-
-            Response.StatusCode = StatusCodes.Status200OK;
-
-            var data = new
+            if (student != null)
             {
+                var groupId = _context.StudentGroups
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.StudentId.ToString() == student.Id.ToString());
+
+                var group = _context.Groups
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == groupId.Id.ToString());
+
+                var studyPlan = _context.StudyPlans
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == group.StudyPlanId.ToString());
+
+                var department = _context.Departments
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == group.DepartmentId.ToString());
+
+                var course = _context.Courses
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == studyPlan.CourseId.ToString());
+
+                var studyProgram = _context.StudyPrograms
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == course.StudyProgramId.ToString());
+
+                var faculty = _context.Faculties
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == department.FacultyId.ToString());
+
+                var studyType = _context.StudyTypes
+                    .Select(s => s)
+                    .FirstOrDefault(s => s.Id.ToString() == studyPlan.StudyTypeId.ToString());
+                
+                Response.StatusCode = StatusCodes.Status200OK;
+
+                var data = new
+                {
+                    id = userById.Id,
+                    user = role,
+                    name = userById.Name,
+                    surname = userById.Surname,
+                    email = userById.Email,
+                    groupName = group?.Name,
+                    departmentName = department?.Name,
+                    courseName = course?.Name,
+                    studyProgramName = studyProgram?.Name,
+                    facultyName = faculty?.Name,
+                    studyType?.StudyTypeName
+                };
+                
+                return Json(data);
+            }
+
+            var d = new
+            {
+                id = userById.Id,
                 user = role,
                 name = userById.Name,
                 surname = userById.Surname,
                 email = userById.Email,
-                groupName = group.Name,
-                departmentName = department.Name,
-                courseName = course.Name,
-                studyProgramName = studyProgram.Name,
-                facultyName = faculty.Name,
-                studyType.StudyTypeName
+                groupName = "",
+                departmentName = "",
+                courseName = "",
+                studyProgramName = "",
+                facultyName = "",
+                studyType = ""
             };
-
-            return Json(data);
+                
+            return Json(d);
         }
-
+        
+        Response.StatusCode = StatusCodes.Status404NotFound;
         return new
         {
-            user = role
+            Message = $"Такого пользователя нету в базе данных"
         };
     }
 
     [HttpPost, Route("Tools/EditUser")]
-    public async Task<object> EditUser([FromBody] dynamic data)
+    public async Task<object> EditUser(StudentViewModel viewModel)
     {
-        return data;
+        await _context.SaveChangesAsync();
+
+        Response.StatusCode = StatusCodes.Status200OK;
+        return new
+        {
+            Message = $"Данные пользователя успешно изменены"
+        };
     }
 
     [HttpGet, Route("Tools/GetUsers")]
