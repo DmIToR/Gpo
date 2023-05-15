@@ -34,6 +34,15 @@ const adminPanel: NextPage = () => {
   const [userRole, setUserRole] = useState(0);
 
   const [users, setUsers] = useState<{id: string, userName: string, email: string}[]>([])
+  const [userInfo, setUserInfo] = useState<{
+    user: string,
+    groupName?: string,
+    departmentName?: string,
+    courseName?: string,
+    studyProgramName?: string,
+    facultyName?: string,
+    studyTypeName?: string
+  }>()
 
   const createUser = async () => {
     if(username && email && password) {
@@ -121,6 +130,25 @@ const adminPanel: NextPage = () => {
     })
   }
 
+  const getUsersByUsername = async () => {
+    if(username) {
+      adminApi.getUserByUsername(username)
+      .then((res) => {
+        setUserInfo(res)
+      })
+      .catch((error) => {
+        if(typeof(error.response.data.errorMessage) === "object") {
+          let temp: string[] = []
+          error.response.data.errorMessage.map((item: {code: string, description:string}) => {
+            temp.push(item.description)
+          })
+          setModalMessage(temp.join('\n'))
+        } else setModalMessage(error.response.data.errorMessage)
+        statusAuth.open()
+      })
+    }
+  }
+
   return (
     <>
       <StatusAuth statusAuth={statusAuth} message={modalMessage} />
@@ -131,8 +159,49 @@ const adminPanel: NextPage = () => {
           </p>
           <div className="h-[90%] overflow-y-scroll border rounded-lg p-4">
 
+            {/* Получение пользователя по логину */}
+            <Accordeon name="Получение информации о пользователе" className="">
+              <div className="flex flex-col">
+                {/* Имя пользователя */}
+                <div className="flex items-center">
+                  <p className="whitespace-nowrap text-lg">
+                    Имя пользователя:{" "}
+                  </p>
+                  <input
+                    value={username}
+                    onChange={handleInputUsername}
+                    placeholder="kremlev430-4"
+                    type="text"
+                    className="rounded-lg bg-transparent outline-none ml-2 p-1 text-base text-black placeholder:text-menu-text-gray border font-normal w-full"
+                  />
+                </div>
+
+                <button 
+                onClick={() => getUsersByUsername()}
+                disabled={!username}
+                className="mt-4 w-max border-2 self-center p-2 rounded-md hover:border-blue-active disabled:border-gray-500 disabled:bg-gray-500">
+                  Получить информацию о пользователе
+                </button>
+
+                {userInfo && (
+                  <div className={`h-full p-1 border-2 rounded-md border-black mt-4`}>
+                    <div className="flex flex-col items-center rounded-md p-2 first:mt-0 mt-2">
+                      <p>Пользователь: {userInfo.user}</p>
+                      {userInfo.groupName && (<p>Группа: {userInfo.groupName}</p>)}
+                      {userInfo.departmentName && (<p>Кафедра: {userInfo.departmentName}</p>)}
+                      {userInfo.courseName && (<p>Курс: {userInfo.courseName}</p>)}
+                      {userInfo.studyProgramName && (<p>Степень: {userInfo.studyProgramName}</p>)}
+                      {userInfo.facultyName && (<p>Факультет: {userInfo.facultyName}</p>)}
+                      {userInfo.studyTypeName && (<p>Тип: {userInfo.studyTypeName}</p>)}
+                    </div>
+                </div>
+                )}
+
+              </div>
+            </Accordeon>
+
             {/* Получение списка пользователей */}
-            <Accordeon name="Получение списка пользователей" className="">
+            <Accordeon name="Получение списка пользователей" className="mt-4">
               <div className="flex flex-col">
                 <div className={`${users.length !== 0 ? 'h-40' : 'h-8'} overflow-y-scroll p-1 border-2 rounded-md border-black`}>
                   {users.length !== 0 && users.map((item, index) => (
