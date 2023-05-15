@@ -401,25 +401,7 @@ public class AdminController : Controller
     [HttpGet, Route("Tools/GetUsers")]
     public List<User> GetUsers()
         => _userManager.Users.ToList();
-
-    // [HttpPost, Route("Tools/CreateDocument")]
-    // public async Task<object> CreateDocument(string id)
-    // {
-    //     // string templatePath = @"C:\Users\roman\Gpo\InfoSystem\InfoSystem\Dog.docx";
-    //     //
-    //     // string variable1Name = "ЗАЛУПА";
-    //     // string variable1Value = "Хуй";
-    //     //
-    //     // DocX doc = DocX.Load(templatePath);
-    //     //
-    //     // doc.ReplaceText(variable1Name, variable1Value);
-    //     //
-    //     // doc.SaveAs(templatePath);
-    //     // doc.Dispose();
-    //
-    //     return new { Message = group.StudyPlanId };
-    // }
-
+    
     [HttpPost, Route("Tools/AddFaculty")]
     public async Task<object> AddFaculty(string name)
     {
@@ -862,7 +844,6 @@ public class AdminController : Controller
     [HttpGet, Route("Tools/GetPracticesType")]
     public List<PracticeType> GetPracticesType()
         => _context.PracticeTypes.ToList();
-            
     // [HttpPost, Route("Tools/AddPracticeCompany")]
     // public async Task<object> AddPracticeCompany(string cityName, string companyAddress, string companyEmail,
     //     int itnNumber, string companyName, string companyShortName, string signatoryName, string signatoryLastName,

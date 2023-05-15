@@ -8,6 +8,7 @@ using InfoSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Novacode;
 
 namespace InfoSystem.Controllers;
 
@@ -169,6 +170,163 @@ public class AccountController : Controller
         return new
         {
             Message = $"Данные для догвоора успешно заполнены"
+        };
+    }
+
+    [HttpPost, Route("Tools/CreateDocument")]
+    public async Task<object> CreateDocument(string fullnameCompany, string contactJobName, string contactName,
+        string contactLastname, string contactPatronymic, string studyProgramName, string shortCompanyName,
+        string companyAddress, string studyCourseName, string practiceTypeName, string practiceKindName,
+        int studentsCount, string studentLastName, string studentFirstName, string studentPatronymic, int studentCourse,
+        string studentGroup, DateTime practiceStart, DateTime practiceEnd, string universityHeadName
+        ,string universityHeadPatronymic, string universityHeadLastName, string roomName, string technicalMeans)
+    {
+        string templatePath = @"C:\Users\roman\Gpo\InfoSystem\InfoSystem\DogTest.docx";
+         
+         string variable1Name = "<ORGANIZATION>";
+         string variable1Value = fullnameCompany;
+         
+         DocX doc = DocX.Load(templatePath);
+         
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<JOB>";
+         variable1Value = contactJobName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<F>";
+         variable1Value = contactLastname;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<I>";
+         variable1Value = contactName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<O>";
+         variable1Value = contactPatronymic;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<PROGRAM>";
+         variable1Value = studyProgramName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<COMPANYSHORT>";
+         variable1Value = shortCompanyName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<FIRSTN>";
+         variable1Value = contactName[0] + ". ";
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<FIRSTP>";
+         variable1Value = contactPatronymic[0] + ".";
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<ADDRESS>";
+         variable1Value = companyAddress;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<COURSE>";
+         variable1Value = studyCourseName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<VID>";
+         variable1Value = practiceTypeName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<TYPE>";
+         variable1Value = practiceKindName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<COUNT>";
+         variable1Value = studentsCount.ToString();
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<STUDF>";
+         variable1Value = studentLastName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<STUDI>";
+         variable1Value = studentFirstName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<STUDO>";
+         variable1Value = studentPatronymic;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<LEVEL>";
+         variable1Value = studentCourse.ToString();
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<GROUP>";
+         variable1Value = studentGroup;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<DATESTART>";
+         variable1Value = practiceStart.Date.ToString("MM.dd.yyyy");
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<DATEEND>";
+         variable1Value = practiceEnd.ToString("MM.dd.yyyy");
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<HF>";
+         variable1Value = universityHeadName[0] + ".";
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<HP>";
+         variable1Value = universityHeadPatronymic[0] + ".";
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<HL>";
+         variable1Value = universityHeadLastName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<ROOMNAME>";
+         variable1Value = roomName;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<SREDSTV>";
+         variable1Value = technicalMeans;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         variable1Name = "<SREDSTV>";
+         variable1Value = technicalMeans;
+
+         doc.ReplaceText(variable1Name, variable1Value);
+         
+         doc.SaveAs(templatePath);
+         doc.Dispose();
+
+        Response.StatusCode = StatusCodes.Status200OK;
+        return new
+        {
+            Message = $"Данные успешно заполнены"
         };
     }
 }
