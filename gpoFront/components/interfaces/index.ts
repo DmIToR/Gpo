@@ -20,6 +20,8 @@ export enum ProfileItems {
   name = "Имя",
   surname = "Фамилия",
   patronymic = "Отчество",
+  username = 'Логин',
+  email = 'Почта'
 }
 
 export interface IProfileInfoItem {

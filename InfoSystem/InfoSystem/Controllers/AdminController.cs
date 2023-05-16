@@ -64,181 +64,206 @@ public class AdminController : Controller
             new Claim(ClaimTypes.Role, model.Role.ToString())
         );
 
+        switch (model.Role)
+        {
+            case UserRole.Student:
+                await CreateUserRole<Student>(user);
+                break;
+            case UserRole.Teacher:
+                await CreateUserRole<Teacher>(user);
+                break;
+            case UserRole.EducationDepartment:
+                break;
+            case UserRole.Admin:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
         await _context.SaveChangesAsync();
 
         return new { Message = $"Пользователь {model.UserName} успешно создан." };
     }
 
-    [HttpPost, Route("Tools/CreateStudent")]
-    public async Task<object> CreateStudent(SignUpViewModel model)
+    private async Task CreateUserRole<TUser>(User user) where TUser : Profile, new()
     {
-        if (!ModelState.IsValid)
+        var result = await _context.AddAsync(new TUser
         {
-            Response.StatusCode = StatusCodes.Status400BadRequest;
-            return new { ErrorMessage = "Неверная структура данных." };
-        }
-
-        if (await _userManager.FindByNameAsync(model.UserName) is not null
-            || await _userManager.FindByEmailAsync(model.Email) is not null)
-        {
-            Response.StatusCode = StatusCodes.Status409Conflict;
-            ModelState.AddModelError("", "User already exists.");
-            return new { ErrorMessage = "Пользователь с такими данными уже существует." };
-        }
-
-        var user = new User
-        {
-            UserName = model.UserName,
-            Email = model.Email
-        };
-
-        var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-        {
-            Response.StatusCode = StatusCodes.Status400BadRequest;
-            return new { ErrorMessage = result.Errors };
-        }
-
-        await _userManager.AddClaimAsync(
-            user,
-            new Claim(ClaimTypes.Role, model.Role.ToString())
-        );
-
-        var faculty = new Faculty
-        {
-            Name = "Факультет систем управления"
-        };
-
-        _context.Add(faculty);
-        await _context.SaveChangesAsync();
-
-        var studyType = new StudyType
-        {
-            StudyTypeName = "очное"
-        };
-
-        _context.Add(studyType);
-        await _context.SaveChangesAsync();
-
-        var studyProgram = new StudyProgram
-        {
-            Name = "Бакалавриат"
-        };
-
-        _context.Add(studyProgram);
-        await _context.SaveChangesAsync();
-
-        var course = new Course
-        {
-            Name = "1 курс",
-            StudyProgramId = studyProgram.Id
-        };
-
-        _context.Add(course);
-        await _context.SaveChangesAsync();
-
-        var department = new Department
-        {
-            FacultyId = faculty.Id,
-            Name = "Автоматизированных систем упрвления"
-        };
-
-        _context.Add(department);
-        await _context.SaveChangesAsync();
-
-        var studyPlan = new StudyPlan
-        {
-            CourseId = course.Id,
-            StudyTypeId = studyType.Id, // тут по идее факульти id(хз)
-            FacultyId = studyType.Id,
-        };
-
-        _context.Add(studyPlan);
-        await _context.SaveChangesAsync();
-
-        var group = new Group
-        {
-            Name = "430-4",
-            StudyPlanId = studyPlan.Id,
-            DepartmentId = department.Id
-        };
-
-        _context.Add(group);
-        await _context.SaveChangesAsync();
-        _context.ChangeTracker.Clear();
-
-        var student = new Student
-        {
-            Id = user.Id,
+            Id = Guid.NewGuid(),
             UserId = user.Id
-        };
-
-        _context.Add(student);
-        await _context.SaveChangesAsync();
-
-        _context.Add(new StudentGroup
-        {
-            Id = group.Id,
-            GroupId = group.Id,
-            StudentId = student.Id
         });
-
-        await _context.SaveChangesAsync();
-
-        return new { Message = $"Пользователь {model.UserName} успешно создан(студент)." };
     }
 
-    [HttpPost, Route("Tools/CreateTeacher")]
-    public async Task<object> CreateTeacher(SignUpViewModel model, string jobName)
-    {
-        if (!ModelState.IsValid)
-        {
-            Response.StatusCode = StatusCodes.Status400BadRequest;
-            return new { ErrorMessage = "Неверная структура данных." };
-        }
+    // [HttpPost, Route("Tools/CreateStudent")]
+    // public async Task<object> CreateStudent(SignUpViewModel model)
+    // {
+    //     if (!ModelState.IsValid)
+    //     {
+    //         Response.StatusCode = StatusCodes.Status400BadRequest;
+    //         return new { ErrorMessage = "Неверная структура данных." };
+    //     }
+    //
+    //     if (await _userManager.FindByNameAsync(model.UserName) is not null
+    //         || await _userManager.FindByEmailAsync(model.Email) is not null)
+    //     {
+    //         Response.StatusCode = StatusCodes.Status409Conflict;
+    //         ModelState.AddModelError("", "User already exists.");
+    //         return new { ErrorMessage = "Пользователь с такими данными уже существует." };
+    //     }
+    //
+    //     var user = new User
+    //     {
+    //         UserName = model.UserName,
+    //         Email = model.Email
+    //     };
+    //
+    //     var result = await _userManager.CreateAsync(user, model.Password);
+    //     if (!result.Succeeded)
+    //     {
+    //         Response.StatusCode = StatusCodes.Status400BadRequest;
+    //         return new { ErrorMessage = result.Errors };
+    //     }
+    //
+    //     await _userManager.AddClaimAsync(
+    //         user,
+    //         new Claim(ClaimTypes.Role, model.Role.ToString())
+    //     );
+    //
+    //     var faculty = new Faculty
+    //     {
+    //         Name = "Факультет систем управления"
+    //     };
+    //
+    //     _context.Add(faculty);
+    //     await _context.SaveChangesAsync();
+    //
+    //     var studyType = new StudyType
+    //     {
+    //         StudyTypeName = "очное"
+    //     };
+    //
+    //     _context.Add(studyType);
+    //     await _context.SaveChangesAsync();
+    //
+    //     var studyProgram = new StudyProgram
+    //     {
+    //         Name = "Бакалавриат"
+    //     };
+    //
+    //     _context.Add(studyProgram);
+    //     await _context.SaveChangesAsync();
+    //
+    //     var course = new Course
+    //     {
+    //         Name = "1 курс",
+    //         StudyProgramId = studyProgram.Id
+    //     };
+    //
+    //     _context.Add(course);
+    //     await _context.SaveChangesAsync();
+    //
+    //     var department = new Department
+    //     {
+    //         FacultyId = faculty.Id,
+    //         Name = "Автоматизированных систем упрвления"
+    //     };
+    //
+    //     _context.Add(department);
+    //     await _context.SaveChangesAsync();
+    //
+    //     var studyPlan = new StudyPlan
+    //     {
+    //         CourseId = course.Id,
+    //         StudyTypeId = studyType.Id, // тут по идее факульти id(хз)
+    //         FacultyId = studyType.Id,
+    //     };
+    //
+    //     _context.Add(studyPlan);
+    //     await _context.SaveChangesAsync();
+    //
+    //     var group = new Group
+    //     {
+    //         Name = "430-4",
+    //         StudyPlanId = studyPlan.Id,
+    //         DepartmentId = department.Id
+    //     };
+    //
+    //     _context.Add(group);
+    //     await _context.SaveChangesAsync();
+    //     _context.ChangeTracker.Clear();
+    //
+    //     var student = new Student
+    //     {
+    //         Id = user.Id,
+    //         UserId = user.Id
+    //     };
+    //
+    //     _context.Add(student);
+    //     await _context.SaveChangesAsync();
+    //
+    //     _context.Add(new StudentGroup
+    //     {
+    //         Id = group.Id,
+    //         GroupId = group.Id,
+    //         StudentId = student.Id
+    //     });
+    //
+    //     await _context.SaveChangesAsync();
+    //
+    //     return new { Message = $"Пользователь {model.UserName} успешно создан(студент)." };
+    // }
+    //
+    // [HttpPost, Route("Tools/CreateTeacher")]
+    // public async Task<object> CreateTeacher(SignUpViewModel model, string jobName)
+    // {
+    //     if (!ModelState.IsValid)
+    //     {
+    //         Response.StatusCode = StatusCodes.Status400BadRequest;
+    //         return new { ErrorMessage = "Неверная структура данных." };
+    //     }
+    //
+    //     model.Role = UserRole.Teacher;
+    //
+    //     if (await _userManager.FindByNameAsync(model.UserName) is not null
+    //         || await _userManager.FindByEmailAsync(model.Email) is not null)
+    //     {
+    //         Response.StatusCode = StatusCodes.Status409Conflict;
+    //         ModelState.AddModelError("", "User already exists.");
+    //         return new { ErrorMessage = "Пользователь с такими данными уже существует." };
+    //     }
+    //
+    //     var user = new User
+    //     {
+    //         UserName = model.UserName,
+    //         Email = model.Email
+    //     };
+    //
+    //     var result = await _userManager.CreateAsync(user, model.Password);
+    //     if (!result.Succeeded)
+    //     {
+    //         Response.StatusCode = StatusCodes.Status400BadRequest;
+    //         return new { ErrorMessage = result.Errors };
+    //     }
+    //
+    //     await _userManager.AddClaimAsync(
+    //         user,
+    //         new Claim(ClaimTypes.Role, model.Role.ToString())
+    //     );
+    //
+    //     var teacher = _context.Add(new Teacher()
+    //     {
+    //         UserId = user.Id,
+    //         Job = "Docent"
+    //     });
+    //
+    //     _context.ChangeTracker.Clear();
+    //     await _context.SaveChangesAsync();
+    //
+    //     return new { Message = $"Пользователь {model.UserName} успешно создан(учитель)." };
+    // }
 
-        model.Role = UserRole.Teacher;
-
-        if (await _userManager.FindByNameAsync(model.UserName) is not null
-            || await _userManager.FindByEmailAsync(model.Email) is not null)
-        {
-            Response.StatusCode = StatusCodes.Status409Conflict;
-            ModelState.AddModelError("", "User already exists.");
-            return new { ErrorMessage = "Пользователь с такими данными уже существует." };
-        }
-
-        var user = new User
-        {
-            UserName = model.UserName,
-            Email = model.Email
-        };
-
-        var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-        {
-            Response.StatusCode = StatusCodes.Status400BadRequest;
-            return new { ErrorMessage = result.Errors };
-        }
-
-        await _userManager.AddClaimAsync(
-            user,
-            new Claim(ClaimTypes.Role, model.Role.ToString())
-        );
-
-        var teacher = _context.Add(new Teacher()
-        {
-            UserId = user.Id,
-            Job = "Docent"
-        });
-
-        _context.ChangeTracker.Clear();
-        await _context.SaveChangesAsync();
-
-        return new { Message = $"Пользователь {model.UserName} успешно создан(учитель)." };
-    }
-
-    [HttpDelete, Route("Tools/DeleteUser")]
-    public async Task<bool> DeleteUser(DeleteUserViewModel model)
+    [HttpDelete, Route("Tools/DeleteUser/{userName}")]
+    public async Task<object> DeleteUser(string userName)
     {
         if (!ModelState.IsValid)
         {
@@ -303,26 +328,25 @@ public class AdminController : Controller
     [HttpGet, Route("Tools/GetUserByUsername/{userName}")]
     public async Task<object> GetUserByUsername(string userName)
     {
-        // var userById = await _userManager.FindByIdAsync(id);
         var user = await _userManager.FindByNameAsync(userName);
         if (user is null)
         {
             Response.StatusCode = StatusCodes.Status404NotFound;
             return new { ErrorMessage = "Пользователь не найден." };
         }
-        
+
         var role = _userManager.GetClaimsAsync(user).Result.First().Value;
         if (role == "Student")
         {
             var student = _context.Students
                 .Select(s => s)
-                .First(s => s.Id.ToString() == user.Id.ToString());
+                .FirstOrDefault(s => s.Id == user.Id);
 
             if (student != null)
             {
                 var groupId = _context.StudentGroups
                     .Select(s => s)
-                    .FirstOrDefault(s => s.StudentId.ToString() == student.Id.ToString());
+                    .FirstOrDefault(s => s.StudentId == student.Id);
 
                 var group = _context.Groups
                     .Select(s => s)
@@ -851,7 +875,7 @@ public class AdminController : Controller
             Message = $"PracticeKinds отсутствует в базе данных"
         };
     }
-
+    
     [HttpGet, Route("Tools/GetPracticesType")]
     public List<PracticeType> GetPracticesType()
         => _context.PracticeTypes.ToList();

@@ -36,6 +36,9 @@ const adminPanel: NextPage = () => {
   const [users, setUsers] = useState<{id: string, userName: string, email: string}[]>([])
   const [userInfo, setUserInfo] = useState<{
     user: string,
+    name: string,
+    surname: string,
+    email: string,
     groupName?: string,
     departmentName?: string,
     courseName?: string,
@@ -187,6 +190,9 @@ const adminPanel: NextPage = () => {
                   <div className={`h-full p-1 border-2 rounded-md border-black mt-4`}>
                     <div className="flex flex-col items-center rounded-md p-2 first:mt-0 mt-2">
                       <p>Пользователь: {userInfo.user}</p>
+                      {userInfo.name && (<p>Имя: {userInfo.name}</p>)}
+                      {userInfo.surname && (<p>Фамилия: {userInfo.surname}</p>)}
+                      {userInfo.email && (<p>email: {userInfo.email}</p>)}
                       {userInfo.groupName && (<p>Группа: {userInfo.groupName}</p>)}
                       {userInfo.departmentName && (<p>Кафедра: {userInfo.departmentName}</p>)}
                       {userInfo.courseName && (<p>Курс: {userInfo.courseName}</p>)}

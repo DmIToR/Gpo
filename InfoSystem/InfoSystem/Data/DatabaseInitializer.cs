@@ -17,7 +17,7 @@ public static class DatabaseInitializer
         
         var user = new User { UserName = "admin" };
 
-        var result = userManager.CreateAsync(user, "A1dm3in!")
+        var result = userManager.CreateAsync(user, "Admin1!")
             .GetAwaiter()
             .GetResult();
         

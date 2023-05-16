@@ -94,7 +94,7 @@ public class Startup
         app.UseRouting();
 
         app.UseCors("_myAllowSpecificOrigins");
-        app.UseAuthorization();
+        // app.UseAuthorization();
 
         app.UseHttpsRedirection();
         app.UseRouting();

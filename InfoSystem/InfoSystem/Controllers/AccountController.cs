@@ -174,149 +174,144 @@ public class AccountController : Controller
     }
 
     [HttpPost, Route("Tools/CreateDocument")]
-    public async Task<object> CreateDocument(string fullnameCompany, string contactJobName, string contactName,
-        string contactLastname, string contactPatronymic, string studyProgramName, string shortCompanyName,
-        string companyAddress, string studyCourseName, string practiceTypeName, string practiceKindName,
-        int studentsCount, string studentLastName, string studentFirstName, string studentPatronymic, int studentCourse,
-        string studentGroup, DateTime practiceStart, DateTime practiceEnd, string universityHeadName
-        ,string universityHeadPatronymic, string universityHeadLastName, string roomName, string technicalMeans)
+    public async Task<object> CreateDocument(DocumentTemplateViewModel model)
     {
-        string templatePath = @"C:\Users\roman\Gpo\InfoSystem\InfoSystem\DogTest.docx";
+        string templatePath = @"/Users/vladislavzavzatov/study/ГПО/tempGPO/Gpo/InfoSystem/InfoSystem/DogTest.docx";
          
          string variable1Name = "<ORGANIZATION>";
-         string variable1Value = fullnameCompany;
+         string variable1Value = model.FullnameCompany;
          
          DocX doc = DocX.Load(templatePath);
          
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<JOB>";
-         variable1Value = contactJobName;
+         variable1Value = model.ContactJobName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<F>";
-         variable1Value = contactLastname;
+         variable1Value = model.ContactLastname;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<I>";
-         variable1Value = contactName;
+         variable1Value = model.ContactName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<O>";
-         variable1Value = contactPatronymic;
+         variable1Value = model.ContactPatronymic;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<PROGRAM>";
-         variable1Value = studyProgramName;
+         variable1Value = model.StudyProgramName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<COMPANYSHORT>";
-         variable1Value = shortCompanyName;
+         variable1Value = model.ShortCompanyName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<FIRSTN>";
-         variable1Value = contactName[0] + ". ";
+         variable1Value = model.ContactName[0] + ". ";
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<FIRSTP>";
-         variable1Value = contactPatronymic[0] + ".";
+         variable1Value = model.ContactPatronymic[0] + ".";
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<ADDRESS>";
-         variable1Value = companyAddress;
+         variable1Value = model.CompanyAddress;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<COURSE>";
-         variable1Value = studyCourseName;
+         variable1Value = model.StudyCourseName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<VID>";
-         variable1Value = practiceTypeName;
+         variable1Value = model.PracticeTypeName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<TYPE>";
-         variable1Value = practiceKindName;
+         variable1Value = model.PracticeKindName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<COUNT>";
-         variable1Value = studentsCount.ToString();
+         variable1Value = model.StudentsCount.ToString();
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<STUDF>";
-         variable1Value = studentLastName;
+         variable1Value = model.StudentLastName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<STUDI>";
-         variable1Value = studentFirstName;
+         variable1Value = model.StudentFirstName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<STUDO>";
-         variable1Value = studentPatronymic;
+         variable1Value = model.StudentPatronymic;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<LEVEL>";
-         variable1Value = studentCourse.ToString();
+         variable1Value = model.StudentCourse.ToString();
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<GROUP>";
-         variable1Value = studentGroup;
+         variable1Value = model.StudentGroup;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<DATESTART>";
-         variable1Value = practiceStart.Date.ToString("MM.dd.yyyy");
+         variable1Value = model.PracticeStart;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<DATEEND>";
-         variable1Value = practiceEnd.ToString("MM.dd.yyyy");
+         variable1Value = model.PracticeEnd;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<HF>";
-         variable1Value = universityHeadName[0] + ".";
+         variable1Value = model.UniversityHeadName[0] + ".";
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<HP>";
-         variable1Value = universityHeadPatronymic[0] + ".";
+         variable1Value = model.UniversityHeadPatronymic[0] + ".";
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<HL>";
-         variable1Value = universityHeadLastName;
+         variable1Value = model.UniversityHeadLastName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<ROOMNAME>";
-         variable1Value = roomName;
+         variable1Value = model.RoomName;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<SREDSTV>";
-         variable1Value = technicalMeans;
+         variable1Value = model.TechnicalMeans;
 
          doc.ReplaceText(variable1Name, variable1Value);
          
          variable1Name = "<SREDSTV>";
-         variable1Value = technicalMeans;
+         variable1Value = model.TechnicalMeans;
 
          doc.ReplaceText(variable1Name, variable1Value);
          

@@ -106,7 +106,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
                 .HasForeignKey<StudyPlan>(key => key.StudyTypeId)
                 .IsRequired();
             
-            plan.HasOne<StudyType>()
+            plan.HasOne<Faculty>()
                 .WithMany()
                 .HasForeignKey(key => key.FacultyId)
                 .IsRequired();

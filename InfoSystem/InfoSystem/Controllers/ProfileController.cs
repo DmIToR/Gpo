@@ -43,7 +43,7 @@ public class ProfileController : Controller
         var claims = await _userManager.GetClaimsAsync(user);
         if (claims.Any(c => c.Value == "Student"))
         {
-            profile = await _context.Students.FirstOrDefaultAsync(p => p.Id == user.Id);
+            profile = await _context.Students.FirstOrDefaultAsync(p => p.UserId == user.Id);
             var studentGroup = await _context.StudentGroups.FirstOrDefaultAsync(e => 
                 e.StudentId == ((Student)profile).Id 
                 && e.IsCurrent);
